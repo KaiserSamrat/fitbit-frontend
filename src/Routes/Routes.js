@@ -1,0 +1,71 @@
+import { Redirect } from 'react-router-dom';
+import Login from '../Components/Authentication/Login';
+
+import Dashboard from '../Components/Dashboard/Dashboard';
+import AddUser from '../Components/User/AddUser';
+import DoctorList from '../Components/User/DoctorList';
+import FitbitData from '../Components/User/FitbitData';
+import GenerateUrl from '../Components/User/GenerateUrl';
+
+
+
+
+
+import User from '../Components/User/User';
+const openRoute = [
+  // { path: "/logout", component: Logout },
+  { path: '/login', component: Login },
+
+  {
+    path: '/add-user',
+    component: AddUser,
+   
+  },
+];
+
+const protectedRoute = [
+  {
+    path: '/',
+    exact: true,
+    component: () => <Redirect to="/admin-dashboard" />,
+    roles: ['USER', 'DOCTOR', 'ADMIN'],
+  },
+  {
+    path: '/admin-dashboard',
+    component: Dashboard,
+    exact: true,
+    roles: ['USER', 'DOCTOR', 'ADMIN'],
+  },
+
+
+
+
+
+
+  {
+    path: '/user',
+    component: User,
+    exact: true,
+    roles: ['USER', 'DOCTOR', 'ADMIN'],
+  },
+  {
+    path: '/doctor',
+    component: DoctorList,
+    exact: true,
+    roles: ['USER', 'DOCTOR','ADMIN'],
+  },
+  {
+    path: '/generate-url',
+    component: GenerateUrl,
+    exact: true,
+    roles: ['USER', 'DOCTOR','ADMIN'],
+  },
+  {
+    path: '/fitbit-data',
+    component: FitbitData,
+    exact: true,
+    roles: ['USER', 'DOCTOR','ADMIN'],
+  },
+];
+
+export { openRoute, protectedRoute };
