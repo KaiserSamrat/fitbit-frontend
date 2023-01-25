@@ -4,6 +4,7 @@ import Login from '../Components/Authentication/Login';
 import Dashboard from '../Components/Dashboard/Dashboard';
 import AddUser from '../Components/User/AddUser';
 import DoctorList from '../Components/User/DoctorList';
+import DownloadData from '../Components/User/DownloadData';
 import FitbitData from '../Components/User/FitbitData';
 import GenerateUrl from '../Components/User/GenerateUrl';
 
@@ -63,6 +64,12 @@ const protectedRoute = [
   {
     path: '/fitbit-data',
     component: FitbitData,
+    exact: true,
+    roles: ['USER', 'DOCTOR','ADMIN'],
+  },
+  {
+    path: '/data-download',
+    component: DownloadData,
     exact: true,
     roles: ['USER', 'DOCTOR','ADMIN'],
   },

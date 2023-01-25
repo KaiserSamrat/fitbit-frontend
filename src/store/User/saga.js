@@ -29,6 +29,12 @@ import {
   generateUrlFail,
   generateFitbitDataSuccess,
   generateFitbitDataFail,
+  getActivityDataSuccess,
+  getActivityDataFail,
+  accessTokenSuccess,
+  accessTokenFail,
+  getExtendTokenSuccess,
+  getExtendTokenFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -40,6 +46,9 @@ import {
   GIVE_PERMISSION,
   GENERATE_URL,
   GENERATE_FITBIT_DATA,
+  GET_ACTIVITY_DATA,
+  ACCESS_TOKEN,
+  EXTEND_TOKEN,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -85,15 +94,15 @@ function* onGenerateUrl({ payload: { data, history, authtoken } }) {
 function* onGenerateFitbitData({ payload: { data, history, authtoken } }) {
   try {
     let response;
-    const url = "/users/fetchdata";
+    const url = "/users/get-access-token";
     response = yield call(postData, url, data, authtoken);
-    toaster("success", "Data feteched successfully!");
     console.log(response);
     yield put(generateFitbitDataSuccess(response));
-    // history.push("/login");
+    history.push('/data-download')
+   
   } catch (error) {
     if (!error.response) {
-      history.push("/login");
+      history.push('/data-download')
     } else {
       let message = error.response.data.message;
       yield put(generateFitbitDataFail(message));
@@ -101,6 +110,8 @@ function* onGenerateFitbitData({ payload: { data, history, authtoken } }) {
     }
   }
 }
+
+
 function* fetchUser({
   payload: { authtoken, Centralrole, value, currentPage, pageRange },
 }) {
@@ -182,7 +193,30 @@ function* onGivePermission({ payload: { data, history, authtoken } }) {
     }
   }
 }
+function* fetchActivityData({
+  payload: { authtoken, date },
+}) {
+  try {
+    const url = `users/get-activity-data?date=${date}`;
+    const response = yield call(getData, url, authtoken);
 
+    yield put(getActivityDataSuccess(response));
+  } catch (error) {
+    yield put(getActivityDataFail(error));
+  }
+}
+function* fetchExtendToken({
+  payload: { authtoken },
+}) {
+  try {
+    const url = `users/get-extend-token`;
+    const response = yield call(getData, url, authtoken);
+
+    yield put(getExtendTokenSuccess(response));
+  } catch (error) {
+    yield put(getExtendTokenFail(error));
+  }
+}
 function* UserSaga() {
   yield takeEvery(ADD_USER, onAddNewUser);
   yield takeEvery(GET_ALL_USER, fetchUser);
@@ -192,6 +226,8 @@ function* UserSaga() {
   yield takeEvery(GIVE_PERMISSION, onGivePermission);
   yield takeEvery(GENERATE_URL, onGenerateUrl);
   yield takeEvery(GENERATE_FITBIT_DATA, onGenerateFitbitData);
+  yield takeEvery(GET_ACTIVITY_DATA, fetchActivityData);
+  yield takeEvery(EXTEND_TOKEN, fetchExtendToken);
 }
 
 export default UserSaga;

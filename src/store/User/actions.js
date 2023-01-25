@@ -26,7 +26,16 @@ import {
   GENERATE_URL_FAIL,
   GENERATE_FITBIT_DATA,
   GENERATE_FITBIT_DATA_SUCCESS,
-  GENERATE_FITBIT_DATA_FAIL
+  GENERATE_FITBIT_DATA_FAIL,
+  GET_ACTIVITY_DATA,
+  GET_ACTIVITY_DATA_SUCCESS,
+  GET_ACTIVITY_DATA_FAIL,
+  ACCESS_TOKEN,
+  ACCESS_TOKEN_SUCCESS,
+  ACCESS_TOKEN_FAIL,
+  EXTEND_TOKEN,
+  EXTEND_TOKEN_SUCCESS,
+  EXTEND_TOKEN_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -116,6 +125,23 @@ export const getUserDetailsFail = (error) => ({
   payload: error,
 });
 
+
+export const getActivityData = (authtoken, date) => ({
+  type: GET_ACTIVITY_DATA,
+  payload: { authtoken, date },
+});
+
+export const getActivityDataSuccess = (data, authtoken) => ({
+  type: GET_ACTIVITY_DATA_SUCCESS,
+  payload: { data, authtoken },
+});
+
+export const getActivityDataFail = (error) => ({
+  type: GET_ACTIVITY_DATA_FAIL,
+  payload: error,
+});
+
+
 //EDIT USER
 export const storeUserData = (name, data) => ({
   type: STORE_USER_DATA,
@@ -151,6 +177,31 @@ export const getSingleUserFail = (error) => ({
   type: GET_SINGLE_USER_FAIL,
   payload: error,
 });
+export const getExtendToken = (authtoken) => ({
+  type: EXTEND_TOKEN,
+  payload: { authtoken },
+});
+
+export const getExtendTokenSuccess = (data, authtoken) => ({
+  type: EXTEND_TOKEN_SUCCESS,
+  payload: { data, authtoken },
+});
+
+export const getExtendTokenFail = (error) => ({
+  type: EXTEND_TOKEN_FAIL,
+  payload: error,
+});
+
+
+
+
+
+
+
+
+
+
+
 
 
 export const storeUserLoading = (name, data) => ({

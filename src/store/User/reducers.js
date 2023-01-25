@@ -21,7 +21,12 @@ import {
   GENERATE_URL_FAIL,
   GENERATE_FITBIT_DATA,
   GENERATE_FITBIT_DATA_SUCCESS,
-  GENERATE_FITBIT_DATA_FAIL
+  GENERATE_FITBIT_DATA_FAIL,
+  GET_ACTIVITY_DATA_SUCCESS,
+  GET_ACTIVITY_DATA_FAIL,
+  ACCESS_TOKEN,
+  ACCESS_TOKEN_SUCCESS,
+  ACCESS_TOKEN_FAIL
 } from "./actionTypes";
 const INIT_STATE = {
   users: [],
@@ -31,6 +36,7 @@ const INIT_STATE = {
   allUserRole: [],
   userLoading: true,
   editUserInfo: [],
+  activityData: [],
   url:"",
   getUserLoading: true,
   superVisorLoading: true,
@@ -40,7 +46,9 @@ const INIT_STATE = {
   singleUserLoading: true,
   generateUrlLoading: false,
   fitbitDataLoading: false,
+  accessTokenLoading: false,
   urlLoading: false,
+  activityDataLoading: true
 };
 
 const UserReducer = (state = INIT_STATE, action) => {
@@ -90,7 +98,7 @@ const UserReducer = (state = INIT_STATE, action) => {
           case GENERATE_FITBIT_DATA_SUCCESS:
             return {
               ...state,
-              url: action.payload,
+             
               fitbitDataLoading: false,
               
             };
@@ -116,6 +124,12 @@ const UserReducer = (state = INIT_STATE, action) => {
           ...state,
           error: action.payload,
           addingUser: false,
+        };
+
+        return {
+          ...state,
+          error: action.payload,
+          accessTokenLoading: false,
         };
     case GET_ALL_USER_SUCCESS:
       return {
@@ -154,7 +168,17 @@ const UserReducer = (state = INIT_STATE, action) => {
       };
 
     //EDIT USER
-
+    case GET_ACTIVITY_DATA_SUCCESS:
+      return {
+        ...state,
+        activityData: action.payload.data,
+        activityDataLoading: false,
+      };
+    case GET_ACTIVITY_DATA_FAIL:
+      return {
+        ...state,
+        activityDataLoading: false,
+      };
     case STORE_USER_DATA:
       return {
         ...state,

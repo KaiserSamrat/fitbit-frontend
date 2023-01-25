@@ -12,7 +12,7 @@ import { Col, Container, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import BreadcrumbDashboard from "../../Breadcrumb/BreadcrumbDashboard";
 import { getTopBanner, storeDashboardData } from "../../store/Dashboard/action";
-
+import { getExtendToken } from "../../store/actions";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -23,12 +23,13 @@ const Dashboard = () => {
     moment(new Date()).format("YYYY-MM-DD")
   );
 
-  const { startDateRange, endDateRange, authtoken } = useSelector((state) => ({
+  const { startDateRange, endDateRange, authtoken, fitbit } = useSelector((state) => ({
     authtoken: state.Login.token,
+    fitbit: state.Login.fitbit,
     startDateRange: state.DashboardReducer.startDateRange,
     endDateRange: state.DashboardReducer.endDateRange,
   }));
-
+console.log('fitbit', fitbit);
   const handleStartDate = (e) => {
     setStartDate(e.target.value);
     const compareStartDay = moment(e.target.value).diff(
@@ -90,39 +91,12 @@ const Dashboard = () => {
     }
   };
 
-  // const handleData = async () => {
-  //   let YOUR_CLIENT_ID = "2394Q2";
-  //   let YOUR_CLIENT_SECRET = "525413b6c835aa3ee83660e5a2253125";
-  //   let YOUR_RETURN_URL = "https://www.flinders.edu.au";
-
-  //   const api = new Api(YOUR_CLIENT_ID, YOUR_CLIENT_SECRET);
-  //   let YOUR_CODE = api.getLoginUrl(YOUR_RETURN_URL, [
-  //     ApiScope.ACTIVITY,
-  //     ApiScope.PROFILE,
-  //   ]);
-  //   console.log(YOUR_CODE);
-  //   // console.log(api)
-  //   const token = await api.requestAccessToken(
-  //     "1e237be1c6dfbcb42b1f3c9289a774ced92d0450",
-  //     YOUR_RETURN_URL
-  //   );
-  //   api.setAccessToken(token.access_token);
-
-  //   // extend your token
-  //   const extendedToken = await api.extendAccessToken(token.refresh_token);
-
-  //   const { DateTime } = require("luxon");
-
-  //   const { activities } = await api.getActivities({
-  //     afterDate: DateTime.fromObject({
-  //       year: 2022,
-  //       month: 3,
-  //       day: 1,
-  //     }),
-  //   });
-  //   console.log(activities);
-  // };
-
+  // useEffect(() => {
+  //   if(fitbit===true){
+  //     dispatch(getExtendToken(authtoken))
+  //   }
+    
+  // }, []);
   return (
     <Container fluid>
       <BreadcrumbDashboard leftTitle="Dashboard" />

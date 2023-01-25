@@ -35,30 +35,31 @@ const FitbitData = ({ edit }) => {
     setFitbitLoading(true)
     let obj = {};
     obj.secretToken = values.secretToken;
-    fetch('https://flinder-health-care.onrender.com/api/v1/users/fetchdata', {
-      method: 'POST',
-      body: JSON.stringify({
-        secretToken:values.secretToken
-      }),
-      headers: { Authorization: `Bearer ${authtoken}`,'Content-Type': 'application/json' },
-    })
-       .then((response) =>  {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Something went wrong');
-      })
-       .then((data) => {
-        handleExcel(data);
-          // Handle data
-       })
-       .catch((err) => {
-          console.log(err.message);
-          toast( "This token is already used")
-          setFitbitLoading(false)
-       });
+    // fetch('https://flinder-health-care.onrender.com/api/v1/users/get-access-token', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     secretToken:values.secretToken
+    //   }),
+    //   headers: { Authorization: `Bearer ${authtoken}`,'Content-Type': 'application/json' },
+    // })
+    //    .then((response) =>  {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //     throw new Error('Something went wrong');
+    //   })
+    //    .then((data) => {
+    //     handleExcel(data);
+    //       // Handle data
+    //    })
+    //    .catch((err) => {
+    //       console.log(err.message);
+    //       toast( "This token is already used")
+    //       setFitbitLoading(false)
+    //    });
+    console.log('obj', obj);
 
-    // dispatch(generateFitbitData(obj, history, authtoken));
+    dispatch(generateFitbitData(obj, history, authtoken));
   };
   const handleExcel = (fitbitData) => {
     console.log('fitbitData', fitbitData);
@@ -130,11 +131,7 @@ const FitbitData = ({ edit }) => {
               
                     </Row>
 
-                    {fitbitLoading ? (
-                      <div className="d-flex justify-content-end mt-3">
-                        <Spinner className="ms-2" color="primary" />
-                      </div>
-                    ) : (
+                
                       <div className="d-flex justify-content-end mt-3">
                         <input
                           type="submit"
@@ -142,7 +139,7 @@ const FitbitData = ({ edit }) => {
                           className="btn button "
                         />
                       </div>
-                    )}
+                  
                   </Form>
                 </AddCardComponent>
          
