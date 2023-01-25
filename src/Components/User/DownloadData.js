@@ -4,8 +4,8 @@ import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import Select from "react-select";
 import XLSX from "xlsx";
+import { toast } from "react-toastify";
 const categories = [
-
   {
     name: "floors",
     value: "floors",
@@ -32,7 +32,6 @@ const categories = [
   },
 ];
 const categories1 = [
-
   {
     name: "floors",
     value: "floors",
@@ -85,7 +84,7 @@ const DownloadData = () => {
     setEndDate(e.target.value);
   };
   const handleCurrentDateExcel = () => {
-    setCurrentDataLoading(true)
+    setCurrentDataLoading(true);
     fetch(
       `https://flinder-health-care.onrender.com/api/v1/users/get-activity-data?activityName=${categoryCurrent}&startDate=${currentDate}&endDate=${currentDate}`,
       {
@@ -97,95 +96,148 @@ const DownloadData = () => {
         },
       }
     )
-      .then((response) => response.json())
-      .then((data) => handleExcel(data));
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Something went wrong");
+      })
+      .then((data) => handleExcel(data))
+      .catch((err) => {
+        console.log(err.message);
+        toast("Downloading Excel Failed");
+        setCurrentDataLoading(false);
+      });
   };
   const handleExcel = (fitbitData) => {
     console.log("fitbitData", fitbitData);
     let newArray = [];
-    if(categoryCurrent ==="steps"){
-      fitbitData?.data?.["activities-steps-intraday"]?.dataset?.forEach((info, index) => {
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-steps"]?.[0]?.dateTime || "";
-        data.time = info?.time;
-        data.value = info?.value;
-        data.totalValue = fitbitData?.data?.["activities-steps"]?.[0]?.value || "";
-  
-        newArray.push(data);
-      });
+    if (categoryCurrent === "steps") {
+      fitbitData?.data?.["activities-steps-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-steps"]?.[0]?.dateTime || "";
+          data.time = info?.time;
+          data.value = info?.value;
+          data.totalValue =
+            fitbitData?.data?.["activities-steps"]?.[0]?.value || "";
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
-    if(categoryCurrent ==="calories"){
-      fitbitData?.data?.["activities-calories-intraday"]?.dataset?.forEach((info, index) => {
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-calories"]?.[0]?.dateTime || "";
-        data.time = info?.time;
-        data.value = info?.value;
-        data.totalValue = fitbitData?.data?.["activities-calories"]?.[0]?.value || "";
-  
-        newArray.push(data);
-      });
+    if (categoryCurrent === "calories") {
+      fitbitData?.data?.["activities-calories-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-calories"]?.[0]?.dateTime || "";
+          data.time = info?.time;
+          data.value = info?.value;
+          data.totalValue =
+            fitbitData?.data?.["activities-calories"]?.[0]?.value || "";
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
-    if(categoryCurrent ==="distance"){
-      fitbitData?.data?.["activities-distance-intraday"]?.dataset?.forEach((info, index) => {
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-distance"]?.[0]?.dateTime || "";
-        data.time = info?.time;
-        data.value = info?.value;
-        data.totalValue = fitbitData?.data?.["activities-distance"]?.[0]?.value || "";
-  
-        newArray.push(data);
-      });
+    if (categoryCurrent === "distance") {
+      fitbitData?.data?.["activities-distance-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-distance"]?.[0]?.dateTime || "";
+          data.time = info?.time;
+          data.value = info?.value;
+          data.totalValue =
+            fitbitData?.data?.["activities-distance"]?.[0]?.value || "";
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
-    if(categoryCurrent ==="elevation"){
-      fitbitData?.data?.["activities-elevation-intraday"]?.dataset?.forEach((info, index) => {
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-elevation"]?.[0]?.dateTime || "";
-        data.time = info?.time;
-        data.value = info?.value;
-        data.totalValue = fitbitData?.data?.["activities-elevation"]?.[0]?.value || "";
-  
-        newArray.push(data);
-      });
+    if (categoryCurrent === "elevation") {
+      fitbitData?.data?.["activities-elevation-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-elevation"]?.[0]?.dateTime || "";
+          data.time = info?.time;
+          data.value = info?.value;
+          data.totalValue =
+            fitbitData?.data?.["activities-elevation"]?.[0]?.value || "";
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
-    if(categoryCurrent ==="floors"){
-      fitbitData?.data?.["activities-floors-intraday"]?.dataset?.forEach((info, index) => {
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-floors"]?.[0]?.dateTime || "";
-        data.time = info?.time;
-        data.value = info?.value;
-        data.totalValue = fitbitData?.data?.["activities-floors"]?.[0]?.value || "";
-  
-        newArray.push(data);
-      });
+    if (categoryCurrent === "floors") {
+      fitbitData?.data?.["activities-floors-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-floors"]?.[0]?.dateTime || "";
+          data.time = info?.time;
+          data.value = info?.value;
+          data.totalValue =
+            fitbitData?.data?.["activities-floors"]?.[0]?.value || "";
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
-    if(categoryCurrent ==="heart"){
-      fitbitData?.data?.["activities-heart-intraday"]?.dataset?.forEach((info, index) => {
-       
-        let data = {};
-        data.category = categoryCurrent
-        data.date = fitbitData?.data?.["activities-heart"]?.[0]?.dateTime || "";
-        data.restingHeartRate = fitbitData?.data?.["activities-heart"]?.[0]?.value?.restingHeartRate ;
-        data.name = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.name ;
-        data.minutes = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.minutes ;
-        data.caloriesOut = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.caloriesOut ;
-        data.minHeartRate = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.min ;
-        data.maxHeartRate = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.max ;
-        data.minutes = fitbitData?.data?.["activities-heart"]?.[0]?.value?.heartRateZones?.[index]?.minutes ;
-        data.time = info?.time;
-        data.value = info?.value;
-       
-        newArray.push(data);
-      });
+    if (categoryCurrent === "heart") {
+      fitbitData?.data?.["activities-heart-intraday"]?.dataset?.forEach(
+        (info, index) => {
+          let data = {};
+          data.category = categoryCurrent;
+          data.date =
+            fitbitData?.data?.["activities-heart"]?.[0]?.dateTime || "";
+          data.restingHeartRate =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.restingHeartRate;
+          data.name =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.name;
+          data.minutes =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.minutes;
+          data.caloriesOut =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.caloriesOut;
+          data.minHeartRate =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.min;
+          data.maxHeartRate =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.max;
+          data.minutes =
+            fitbitData?.data?.[
+              "activities-heart"
+            ]?.[0]?.value?.heartRateZones?.[index]?.minutes;
+          data.time = info?.time;
+          data.value = info?.value;
+
+          newArray.push(data);
+        }
+      );
       downloadxls(newArray);
     }
   };
@@ -194,8 +246,8 @@ const DownloadData = () => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-    XLSX.writeFile(wb, "Fitbit Data.xlsx");
-    setCurrentDataLoading(false)
+    XLSX.writeFile(wb, `${categoryCurrent} Data_${currentDate}.xlsx`);
+    setCurrentDataLoading(false);
   };
 
   const handleDateRangeExcel = () => {
@@ -212,74 +264,86 @@ const DownloadData = () => {
         },
       }
     )
-      .then((response) => response.json())
-      .then((data) => handleExcel2(data));
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Something went wrong");
+    })
+      .then((data) => handleExcel2(data))
+      .catch((err) => {
+        console.log(err.message);
+        toast("Downloading Excel Failed");
+        setRangeDataLoading(false);
+      });
   };
   const handleExcel2 = (fitbitData) => {
     console.log("fitbitData", fitbitData);
     let newArray = [];
-    if(categoryRange ==="floors") {
+    if (categoryRange === "floors") {
       fitbitData?.data?.["activities-floors"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.value = info?.value || 0
+        data.value = info?.value || 0;
         newArray.push(data);
       });
       downloadxls1(newArray);
     }
-    if(categoryRange ==="heart"){
+    if (categoryRange === "heart") {
       fitbitData?.data?.["activities-heart"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.heartRateZones = info?.value?.heartRateZones?.forEach((dt, idx) => {
-          data[` name-${idx + 1}`] = dt?.name;
-          data[` caloriesOut-${idx + 1}`] = dt?.caloriesOut;
-          data[` min-${idx + 1}`] = dt?.min;
-          data[` max-${idx + 1}`] = dt?.max;
-          data[` minutes-${idx + 1}`] = dt?.minutes;
-        });
+        data.heartRateZones = info?.value?.heartRateZones?.forEach(
+          (dt, idx) => {
+            data[` name-${idx + 1}`] = dt?.name;
+            data[` caloriesOut-${idx + 1}`] = dt?.caloriesOut;
+            data[` min-${idx + 1}`] = dt?.min;
+            data[` max-${idx + 1}`] = dt?.max;
+            data[` minutes-${idx + 1}`] = dt?.minutes;
+          }
+        );
         newArray.push(data);
       });
       downloadxls1(newArray);
     }
-    if(categoryRange ==="calories") {
+    if (categoryRange === "calories") {
       fitbitData?.data?.["activities-calories"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.value = info?.value || 0
+        data.value = info?.value || 0;
         newArray.push(data);
       });
       downloadxls1(newArray);
     }
-    if(categoryRange ==="distance") {
+    if (categoryRange === "distance") {
       fitbitData?.data?.["activities-distance"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.value = info?.value || 0
+        data.value = info?.value || 0;
         newArray.push(data);
       });
       downloadxls1(newArray);
     }
-    if(categoryRange ==="elevation") {
+    if (categoryRange === "elevation") {
       fitbitData?.data?.["activities-elevation"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.value = info?.value || 0
+        data.value = info?.value || 0;
         newArray.push(data);
       });
       downloadxls1(newArray);
     }
-    if(categoryRange ==="steps") {
+    if (categoryRange === "steps") {
       fitbitData?.data?.["activities-steps"].forEach((info, index) => {
         let data = {};
-        data.category = categoryRange
+        data.category = categoryRange;
         data.date = info?.dateTime || "";
-        data.value = info?.value || 0
+        data.value = info?.value || 0;
         newArray.push(data);
       });
       downloadxls1(newArray);
@@ -290,17 +354,28 @@ const DownloadData = () => {
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-    XLSX.writeFile(wb, "Fitbit Data.xlsx");
+    XLSX.writeFile(wb, `${categoryRange} Data.xlsx`);
     setRangeDataLoading(false);
   };
   const handleCategories = (data) => {
     console.log("daata", data);
-    setCategoryRange(data?.value);
+    if(data?.value){
+      setCategoryRange(data?.value);
+    }
+    else{
+      setCategoryRange('heart')
+    }
+   
   };
-  const handleCurrentDateCategory = (data) =>{
-    setCategoryCurrent(data?.value)
-
-  }
+  const handleCurrentDateCategory = (data) => {
+    if(data?.value){
+      setCategoryCurrent(data?.value);
+    }
+    else{
+      setCategoryCurrent('heart')
+   
+  };
+}
   // setRangeDataLoading(false);
   return (
     <div className="page-content">
@@ -319,8 +394,8 @@ const DownloadData = () => {
                   getOptionLabel={(e) => e.name}
                   getOptionValue={(e) => e.value}
                   isClearable
-                    options={categories1}
-                    onChange={handleCurrentDateCategory}
+                  options={categories1}
+                  onChange={handleCurrentDateCategory}
                 />
                 <Form.Group className="form-data-filtering custom-bottom-margin">
                   <Form.Label>Select Date</Form.Label>
@@ -337,10 +412,10 @@ const DownloadData = () => {
                 <h6>Downloading...</h6>
               </div>
             ) : (
-            <div className="text-center mt-3">
-              <Button onClick={handleCurrentDateExcel}>Download Excel</Button>
-            </div>
-             )}
+              <div className="text-center mt-3">
+                <Button onClick={handleCurrentDateExcel}>Download Excel</Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -35,64 +35,17 @@ const FitbitData = ({ edit }) => {
     setFitbitLoading(true)
     let obj = {};
     obj.secretToken = values.secretToken;
-    // fetch('https://flinder-health-care.onrender.com/api/v1/users/get-access-token', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     secretToken:values.secretToken
-    //   }),
-    //   headers: { Authorization: `Bearer ${authtoken}`,'Content-Type': 'application/json' },
-    // })
-    //    .then((response) =>  {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     throw new Error('Something went wrong');
-    //   })
-    //    .then((data) => {
-    //     handleExcel(data);
-    //       // Handle data
-    //    })
-    //    .catch((err) => {
-    //       console.log(err.message);
-    //       toast( "This token is already used")
-    //       setFitbitLoading(false)
-    //    });
-    console.log('obj', obj);
-
+   
     dispatch(generateFitbitData(obj, history, authtoken));
   };
-  const handleExcel = (fitbitData) => {
-    console.log('fitbitData', fitbitData);
-    let newArray = []
-    fitbitData?.data?.forEach((info, index) => {
-      let data = {}
-      data.date = info?.start?.slice(0,10) || ""
-      data.ActivityName = info?.source?.activityName || ""
-      data.Elevation = info?.source?.elevationGain || ""
-      data.Steps = info?.steps || ""
-      data.Calories = info?.calories || ""
-      data.Distance = info?.distance?.value || 0 + " km"
-      
-      newArray.push(data)
-     
-    })
-    downloadxls(newArray)
-  }
+
   const generateFitbitDataInfo = useFormik({
     enableReinitialize: true,
     initialValues: initialValues,
     validationSchema: generateFitbitDataSchema,
     onSubmit,
   });
-  const downloadxls = data => {
-    console.log(XLSX.version)
-    const ws = XLSX.utils.json_to_sheet(data)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, ws, "SheetJS")
-    XLSX.writeFile(wb, "Fitbit Data.xlsx")
-    setFitbitLoading(false)
-   
-  }
+
   return (
     <React.Fragment>
       <div className="my-5 pt-sm-5">
@@ -130,7 +83,11 @@ const FitbitData = ({ edit }) => {
 
               
                     </Row>
-
+                    {fitbitDataLoading ? (
+                      <div className="d-flex justify-content-end mt-3">
+                        <Spinner className="ms-2" color="primary" />
+                      </div>
+                    ) : (
                 
                       <div className="d-flex justify-content-end mt-3">
                         <input
@@ -139,6 +96,7 @@ const FitbitData = ({ edit }) => {
                           className="btn button "
                         />
                       </div>
+                       )}
                   
                   </Form>
                 </AddCardComponent>

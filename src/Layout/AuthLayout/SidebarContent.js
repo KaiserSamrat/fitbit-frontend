@@ -164,7 +164,18 @@ const SidebarContent = (props) => {
                 </li>
             
               </React.Fragment>
-     
+              <React.Fragment>
+                <li>
+                  <Link to="/data-download"  className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Download Data"}</span>
+                
+                  </Link>
+                </li>
+            
+              </React.Fragment>
               {/* <React.Fragment>
                 <li>
                   <Link to="/fitbit-data"  className="">
