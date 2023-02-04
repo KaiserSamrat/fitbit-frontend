@@ -1,206 +1,94 @@
-import {
-    GET_TOP_BANNER,
-    GET_TOP_BANNER_SUCCESS,
-    GET_TOP_BANNER_FAIL,
-    GET_GIFT_DISBURSEMENT,
-    GET_GIFT_DISBURSEMENT_SUCCESS,
-    GET_GIFT_DISBURSEMENT_FAIL,
-    GET_DASHBOARD_CATEGORY,
-    GET_DASHBOARD_CATEGORY_SUCCESS,
-    GET_DASHBOARD_CATEGORY_FAIL,
-    GET_DASHBOARD_BRAND,
-    GET_DASHBOARD_BRAND_SUCCESS,
-    GET_DASHBOARD_BRAND_FAIL,
-    GET_DASHBOARD_PARTNER,
-    GET_DASHBOARD_PARTNER_SUCCESS,
-    GET_DASHBOARD_PARTNER_FAIL,
-    GET_LEAD_TIME,
-    GET_LEAD_TIME_SUCCESS,
-    GET_LEAD_TIME_FAIL,
-    GET_ERROR,
-    GET_ERROR_SUCCESS,
-    GET_ERROR_FAIL,
-    GET_BP_DELIVERY,
-    GET_BP_DELIVERY_SUCCESS,
-    GET_BP_DELIVERY_FAIL,
-    GET_NOTIFICATION,
-    GET_NOTIFICATION_SUCCESS,
-    GET_NOTIFICATION_FAIL,
-    GET_DASHBOARD_STOCK,
-    GET_DASHBOARD_STOCK_SUCCESS,
-    GET_DASHBOARD_STOCK_FAIL,
-    
-    UPDATE_NOTIFICATION,
-    UPDATE_NOTIFICATION_SUCCESS,
-    UPDATE_NOTIFICATION_FAIL,
+import { GET_DASHBOARD_CALORIES_DATA, GET_DASHBOARD_CALORIES_DATA_FAIL, GET_DASHBOARD_CALORIES_DATA_SUCCESS, GET_DASHBOARD_DISTANCE_DATA, GET_DASHBOARD_DISTANCE_DATA_FAIL, GET_DASHBOARD_DISTANCE_DATA_SUCCESS, GET_DASHBOARD_ELEVATION_DATA, GET_DASHBOARD_ELEVATION_DATA_FAIL, GET_DASHBOARD_ELEVATION_DATA_SUCCESS, GET_DASHBOARD_FLOOR_DATA, GET_DASHBOARD_FLOOR_DATA_FAIL, GET_DASHBOARD_FLOOR_DATA_SUCCESS, GET_DASHBOARD_HEART_DATA, GET_DASHBOARD_HEART_DATA_FAIL, GET_DASHBOARD_HEART_DATA_SUCCESS, GET_DASHBOARD_STEP_DATA, GET_DASHBOARD_STEP_DATA_FAIL, GET_DASHBOARD_STEP_DATA_SUCCESS, STORE_DASHBOARD_DATA } from "./actionTypes";
 
-    STORE_DASHBOARD_DATA
 
-    
+export const getDashboardHeartData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_HEART_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-  } from "./actionTypes";
-  
-  export const getTopBanner = (authtoken, fromDate, toDate) => ({
-    type: GET_TOP_BANNER,
-    payload: { authtoken, fromDate, toDate},
-  });
-  
-  export const getTopBannerSuccess = (data) => ({
-    type: GET_TOP_BANNER_SUCCESS,
-    payload: { data },
-  });
-  export const getTopBannerFail = (error) => ({
-    type: GET_TOP_BANNER_FAIL,
-    payload: error,
-  });
-  export const getGiftDisbursement = (authtoken, fromDate, toDate) => ({
-    type: GET_GIFT_DISBURSEMENT,
-    payload: { authtoken, fromDate, toDate},
-  });
-  
-  export const getGiftDisbursementSuccess = (data) => ({
-    type: GET_GIFT_DISBURSEMENT_SUCCESS,
-    payload: { data },
-  });
-  export const getGiftDisbursementFail = (error) => ({
-    type: GET_GIFT_DISBURSEMENT_FAIL,
-    payload: error,
-  });
+export const getDashboardHeartSuccess = (data) => ({
+  type: GET_DASHBOARD_HEART_DATA_SUCCESS,
+  payload: { data },
+});
 
-  export const getBpDelivery = (authtoken, fromDate, toDate) => ({
-    type: GET_BP_DELIVERY,
-    payload: { authtoken, fromDate, toDate},
-  });
-  
-  export const getBpDeliverySuccess = (data) => ({
-    type: GET_BP_DELIVERY_SUCCESS,
-    payload: { data },
-  });
-  export const getBpDeliveryFail = (error) => ({
-    type: GET_BP_DELIVERY_FAIL,
-    payload: error,
-  });
+export const getDashboardHeartFail = (error) => ({
+  type: GET_DASHBOARD_HEART_DATA_FAIL,
+  payload: error,
+});
+export const getDashboardStepData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_STEP_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-  export const getDashboardCategory = (authtoken, fromDate, toDate) => ({
-    type: GET_DASHBOARD_CATEGORY,
-    payload: {  authtoken, fromDate, toDate},
-  });
-  
-  export const getDashboardCategorySuccess = (data) => ({
-    type: GET_DASHBOARD_CATEGORY_SUCCESS,
-    payload: { data },
-  });
+export const getDashboardStepDataSuccess = (data) => ({
+  type: GET_DASHBOARD_STEP_DATA_SUCCESS,
+  payload: { data },
+});
 
-  export const getDashboardCategoryFail = (error) => ({
-    type: GET_DASHBOARD_CATEGORY_FAIL,
-    payload: error,
-  });
+export const getDashboardStepDataFail = (error) => ({
+  type: GET_DASHBOARD_STEP_DATA_FAIL,
+  payload: error,
+});
 
-  export const getDashboardBrand = ( authtoken, fromDate, toDate) => ({
-    type: GET_DASHBOARD_BRAND,
-    payload: {  authtoken, fromDate, toDate},
-  });
-  
-  export const getDashboardBrandSuccess = (data) => ({
-    type: GET_DASHBOARD_BRAND_SUCCESS,
-    payload: { data },
-  });
-  
-  export const getDashboardBrandFail = (error) => ({
-    type: GET_DASHBOARD_BRAND_FAIL,
-    payload: error,
-  });
+export const getDashboardDistanceData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_DISTANCE_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-  export const getDashboardPartner = ( authtoken, fromDate, toDate) => ({
-    type: GET_DASHBOARD_PARTNER,
-    payload: {  authtoken, fromDate, toDate},
-  });
-  
-  export const getDashboardPartnerSuccess = (data) => ({
-    type: GET_DASHBOARD_PARTNER_SUCCESS,
-    payload: { data },
-  });
-  export const getDashboardPartnerFail = (error) => ({
-    type: GET_DASHBOARD_PARTNER_FAIL,
-    payload: error,
-  });
+export const getDashboardDistanceDataSuccess = (data) => ({
+  type: GET_DASHBOARD_DISTANCE_DATA_SUCCESS,
+  payload: { data },
+});
 
-  
-  export const getLead = ( authtoken, fromDate, toDate) => ({
-    type: GET_LEAD_TIME,
-    payload: {  authtoken, fromDate, toDate},
-  });
-  
-  export const getLeadSuccess = (data) => ({
-    type: GET_LEAD_TIME_SUCCESS,
-    payload: { data },
-  });
+export const getDashboardDistanceDataFail = (error) => ({
+  type: GET_DASHBOARD_DISTANCE_DATA_FAIL,
+  payload: error,
+});
 
-  export const getLeadFail = (error) => ({
-    type: GET_LEAD_TIME_FAIL,
-    payload: error,
-  });
+export const getDashboardFloorData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_FLOOR_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-  
-  export const getError = ( authtoken, fromDate, toDate) => ({
-    type: GET_ERROR,
-    payload: {  authtoken, fromDate, toDate},
-  });
-  
-  export const getErrorSuccess = (data) => ({
-    type: GET_ERROR_SUCCESS,
-    payload: { data },
-  });
+export const getDashboardFloorDataSuccess = (data) => ({
+  type: GET_DASHBOARD_FLOOR_DATA_SUCCESS,
+  payload: { data },
+});
 
-  export const getErrorFail = (error) => ({
-    type: GET_ERROR_FAIL,
-    payload: error,
-  });
+export const getDashboardFloorDataFail = (error) => ({
+  type: GET_DASHBOARD_FLOOR_DATA_FAIL,
+  payload: error,
+});
+export const getDashboardElevationData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_ELEVATION_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-    
-  export const getNotification = (authtoken) => ({
-    type: GET_NOTIFICATION,
-    payload: {authtoken},
-  });
-  
-  export const getNotificationSuccess = (data) => ({
-    type: GET_NOTIFICATION_SUCCESS,
-    payload: { data },
-  });
 
-  export const getNotificationFail = (error) => ({
-    type: GET_NOTIFICATION_FAIL,
-    payload: error,
-  });
-  export const updateNotification = (data, history, authtoken, id) => ({
-    type: UPDATE_NOTIFICATION,
-    payload: { data, history, authtoken, id },
-  });
-  export const updateNotificationSuccess = (data) => ({
-    type: UPDATE_NOTIFICATION_SUCCESS,
-    payload: data,
-  });
-  
-  export const updateNotificationFail = (error) => ({
-    type: UPDATE_NOTIFICATION_FAIL,
-    payload: error,
-  });
-  export const storeDashboardData = (name, data) => ({
-    type: STORE_DASHBOARD_DATA,
-    payload: { name, data },
-  });
+export const getDashboardElevationDataSuccess = (data) => ({
+  type: GET_DASHBOARD_ELEVATION_DATA_SUCCESS,
+  payload: { data },
+});
 
-  export const getDashboardStock = (authtoken) => ({
-    type: GET_DASHBOARD_STOCK,
-    payload: {  authtoken },
-  });
-  
-  export const getDashboardStockSuccess = (data) => ({
-    type: GET_DASHBOARD_STOCK_SUCCESS,
-    payload: { data },
-  });
+export const getDashboardElevationDataFail = (error) => ({
+  type: GET_DASHBOARD_ELEVATION_DATA_FAIL,
+  payload: error,
+});
+export const getDashboardCaloriesData = (authtoken, categoryType, userId, startDate, endDate) => ({
+  type: GET_DASHBOARD_CALORIES_DATA,
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+});
 
-  export const getDashboardStockFail = (error) => ({
-    type: GET_DASHBOARD_STOCK_FAIL,
-    payload: error,
-  });
+export const getDashboardCaloriesDataSuccess = (data) => ({
+  type: GET_DASHBOARD_CALORIES_DATA_SUCCESS,
+  payload: { data },
+});
+
+export const getDashboardCaloriesDataFail = (error) => ({
+  type: GET_DASHBOARD_CALORIES_DATA_FAIL,
+  payload: error,
+});
+export const storeDashboardData = (name, data) => ({
+  type: STORE_DASHBOARD_DATA,
+  payload: { name, data },
+});

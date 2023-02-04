@@ -27,7 +27,7 @@ function* loginUser({ payload: { user, history } }) {
       id,
       password
     );
-
+console.log('loginUserResponse', loginUserResponse);
     if (loginUserResponse.status === "success") {
       yield put(
         loginSuccess(
@@ -36,6 +36,7 @@ function* loginUser({ payload: { user, history } }) {
           loginUserResponse?.user?.email,
           loginUserResponse?.user?.role,
           loginUserResponse?.user?.fitbit,
+          loginUserResponse?.user?._id,
          
         )
       );

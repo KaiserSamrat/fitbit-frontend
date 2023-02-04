@@ -1,185 +1,101 @@
-import { getData, postData, updateData } from "../../helpers/api_helper"
-import { call, put, takeEvery } from "redux-saga/effects"
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
+import { toaster } from "../../helpers/custom/toaster";
+import { getData, postData, updateData } from "../../helpers/api_helper";
+import { GET_DASHBOARD_CALORIES_DATA, GET_DASHBOARD_DISTANCE_DATA, GET_DASHBOARD_ELEVATION_DATA, GET_DASHBOARD_FLOOR_DATA, GET_DASHBOARD_HEART_DATA, GET_DASHBOARD_STEP_DATA } from "./actionTypes";
 
-import {
-    getTopBannerSuccess,
-    getTopBannerFail,
-    getGiftDisbursementSuccess,
-    getGiftDisbursementFail,
-    getBpDeliverySuccess,
-    getBpDeliveryFail,
-    getDashboardCategorySuccess,
-    getDashboardCategoryFail,
-    getDashboardBrandSuccess,
-    getDashboardBrandFail,
-    getDashboardPartnerSuccess,
-    getDashboardPartnerFail,
-    getLeadSuccess,
-    getLeadFail,
-    getErrorSuccess,
-    getErrorFail,
-    getNotificationSuccess,
-    getNotificationFail,
-    getDashboardStockSuccess,
-    getDashboardStockFail,
-    getNotification
-} from "./action.js"
-import {
-    GET_TOP_BANNER,
-    GET_GIFT_DISBURSEMENT,
-    GET_ERROR,
-    GET_LEAD_TIME,
-    GET_DASHBOARD_PARTNER,
-    GET_DASHBOARD_BRAND,
-    GET_DASHBOARD_CATEGORY,
-    GET_BP_DELIVERY,
-    GET_NOTIFICATION,
-    UPDATE_NOTIFICATION,
-    GET_DASHBOARD_STOCK
 
- 
-} from "./actionTypes"
+import {getDashboardHeartSuccess, getDashboardHeartFail, getDashboardCaloriesDataSuccess, getDashboardCaloriesDataFail, getDashboardStepDataSuccess, getDashboardStepDataFail, getDashboardDistanceDataSuccess, getDashboardDistanceDataFail, getDashboardFloorDataSuccess, getDashboardFloorDataFail, getDashboardElevationDataSuccess, getDashboardElevationDataFail} from './action'
 
-function* fetchTopBanner({ payload: { authtoken, fromDate, toDate} }) {
+
+
+
+function* fetchDashboardHeartData({
+    payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
   try {
-    const url = `dashboard/get-banner?fromDate=${fromDate}&toDate=${toDate}`
-    const response = yield call(getData, url, authtoken)
+    const url = `users/dashboard-data?categoryType=${categoryType}&userId=${"63a293f54ccdb33644f66c26"}&startDate=${"2023-01-01"}&endDate=${"2023-01-02"}`
+    const response = yield call(getData, url, authtoken);
 
-    yield put(getTopBannerSuccess(response))
+    yield put(getDashboardHeartSuccess(response));
   } catch (error) {
-    yield put(getTopBannerFail(error))
+    yield put(getDashboardHeartFail(error));
   }
 }
-function* fetchGiftDisbursement({ payload: { authtoken, fromDate, toDate} }) {
-    try {
-      const url = `dashboard/get-sectionOne-left?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getGiftDisbursementSuccess(response))
-    } catch (error) {
-      yield put(getGiftDisbursementFail(error))
-    }
-  }
-  function* fetchBpDelivery({ payload: { authtoken, fromDate, toDate} }) {
-    try {
- 
-      // const url = `dashboard//get-sectionOne-right?fromDate=${fromDate}&toDate=${toDate}`
-      const url = `dashboard/get-bp-delivery?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getBpDeliverySuccess(response))
-    } catch (error) {
-      yield put(getBpDeliveryFail(error))
-    }
-  }
 
-  function* fetchDashboardCategory({ payload: {  authtoken, fromDate, toDate} }) {
-    try {
- 
-      // const url = `/dashboard/get-category-disburse?fromDate=${fromDate}&toDate=${toDate}`
-      const url = `/dashboard/get-category-progoti?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getDashboardCategorySuccess(response))
-    } catch (error) {
-      yield put(getDashboardCategoryFail(error))
-    }
-  }
-  function* fetchDashboardBrand({ payload: {  authtoken, fromDate, toDate} }) {
-    try {
- 
-      // const url = `/dashboard/get-brand-disburse?fromDate=${fromDate}&toDate=${toDate}`
-      const url = `/dashboard/get-brands-progoti?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getDashboardBrandSuccess(response))
-    } catch (error) {
-      yield put(getDashboardBrandFail(error))
-    }
-  }
-  function* fetchDashboardPartner({ payload: {  authtoken, fromDate, toDate} }) {
-    try {
- 
-      const url = `/dashboard/get-partners-disburse?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getDashboardPartnerSuccess(response))
-    } catch (error) {
-      yield put(getDashboardPartnerFail(error))
-    }
-  }
+function* fetchDashboardCaloriesData({
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
+try {
+  const url = `users/dashboard-data?categoryType=${categoryType}&userId=${userId}&startDate=${startDate}&endDate=${endDate}`
+  const response = yield call(getData, url, authtoken);
 
-  function* fetchDashboardLead({ payload: {  authtoken, fromDate, toDate} }) {
-    try {
- 
-      const url = `/dashboard/get-Lead-Time?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getLeadSuccess(response))
-    } catch (error) {
-      yield put(getLeadFail(error))
-    }
-  }
-  
-  function* fetchDashboardError({ payload: {  authtoken, fromDate, toDate} }) {
-    try {
- 
-      const url = `/dashboard/get-error?fromDate=${fromDate}&toDate=${toDate}`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getErrorSuccess(response))
-    } catch (error) {
-      yield put(getErrorFail(error))
-    }
-  }
-  function* fetchNotification({ payload: {  authtoken } }) {
-    try {
- 
-      const url = `/notification`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getNotificationSuccess(response))
-     
-    } catch (error) {
-      yield put(getNotificationFail(error))
-    }
-  }
-  function* updateNotification({ payload: { data, history, authtoken, id } }) {
-    try {
-      const url = `notification/${id}`;
-      const response = yield call(updateData, url, data, authtoken);
-      yield put(getNotification(authtoken))
-    } catch (error) {
-      console.log(error.response);
-    }
-  }
-  function* fetchDashboardStock({ payload: {  authtoken } }) {
-    try {
- 
-      const url = `/dashboard/get-stocks-progoti`
-      const response = yield call(getData, url, authtoken)
-  
-      yield put(getDashboardStockSuccess(response))
-    } catch (error) {
-      yield put(getDashboardStockFail(error))
-    }
-  }
+  yield put(getDashboardCaloriesDataSuccess(response));
+} catch (error) {
+  yield put(getDashboardCaloriesDataFail(error));
+}
+}
+
+function* fetchDashboardStepData({
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
+try {
+  const url = `users/dashboard-data?categoryType=${categoryType}&userId=${userId}&startDate=${startDate}&endDate=${endDate}`
+  const response = yield call(getData, url, authtoken);
+
+  yield put(getDashboardStepDataSuccess(response));
+} catch (error) {
+  yield put(getDashboardStepDataFail(error));
+}
+}
+function* fetchDashboardDistanceData({
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
+try {
+  const url = `users/dashboard-data?categoryType=${categoryType}&userId=${userId}&startDate=${startDate}&endDate=${endDate}`
+  const response = yield call(getData, url, authtoken);
+
+  yield put(getDashboardDistanceDataSuccess(response));
+} catch (error) {
+  yield put(getDashboardDistanceDataFail(error));
+}
+}
+
+
+function* fetchFloorData({
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
+try {
+  const url = `users/dashboard-data?categoryType=${categoryType}&userId=${userId}&startDate=${startDate}&endDate=${endDate}`
+  const response = yield call(getData, url, authtoken);
+
+  yield put(getDashboardFloorDataSuccess(response));
+} catch (error) {
+  yield put(getDashboardFloorDataFail(error));
+}
+}
+function* fetchElevationData({
+  payload: { authtoken, categoryType, userId, startDate, endDate },
+}) {
+try {
+  const url = `users/dashboard-data?categoryType=${categoryType}&userId=${userId}&startDate=${startDate}&endDate=${endDate}`
+  const response = yield call(getData, url, authtoken);
+
+  yield put(getDashboardElevationDataSuccess(response));
+} catch (error) {
+  yield put(getDashboardElevationDataFail(error));
+}
+}
+
 
 function* DashboardSaga() {
-    yield takeEvery(GET_TOP_BANNER, fetchTopBanner)
-    yield takeEvery(GET_GIFT_DISBURSEMENT, fetchGiftDisbursement)
-    yield takeEvery(GET_BP_DELIVERY, fetchBpDelivery)
-    yield takeEvery(GET_DASHBOARD_CATEGORY, fetchDashboardCategory)
-    yield takeEvery(GET_DASHBOARD_BRAND, fetchDashboardBrand) 
-    yield takeEvery(GET_DASHBOARD_PARTNER, fetchDashboardPartner)
-    yield takeEvery(GET_LEAD_TIME, fetchDashboardLead)
-    yield takeEvery(GET_ERROR, fetchDashboardError)
-    yield takeEvery(GET_NOTIFICATION, fetchNotification)
-    yield takeEvery(UPDATE_NOTIFICATION, updateNotification)
-    yield takeEvery(GET_DASHBOARD_STOCK, fetchDashboardStock)
- 
- 
-  }
-  
-  export default DashboardSaga
+  yield takeEvery(GET_DASHBOARD_HEART_DATA, fetchDashboardHeartData);
+
+  yield takeEvery(GET_DASHBOARD_CALORIES_DATA, fetchDashboardCaloriesData);
+  yield takeEvery(GET_DASHBOARD_STEP_DATA, fetchDashboardStepData);
+  yield takeEvery(GET_DASHBOARD_DISTANCE_DATA, fetchDashboardDistanceData);
+  yield takeEvery(GET_DASHBOARD_FLOOR_DATA, fetchFloorData);
+  yield takeEvery(GET_DASHBOARD_ELEVATION_DATA, fetchElevationData);
+}
+
+export default DashboardSaga;

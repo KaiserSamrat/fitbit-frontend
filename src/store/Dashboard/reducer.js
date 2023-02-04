@@ -1,188 +1,166 @@
+import moment from "moment";
 import {
-    GET_TOP_BANNER_SUCCESS,
-    GET_TOP_BANNER_FAIL,
-    GET_GIFT_DISBURSEMENT_SUCCESS,
-    GET_GIFT_DISBURSEMENT_FAIL,
-    GET_DASHBOARD_CATEGORY_SUCCESS,
-    GET_DASHBOARD_CATEGORY_FAIL,
-    GET_DASHBOARD_BRAND_SUCCESS,
-    GET_DASHBOARD_BRAND_FAIL,
-    GET_DASHBOARD_PARTNER_SUCCESS,
-    GET_DASHBOARD_PARTNER_FAIL,
-    GET_LEAD_TIME_SUCCESS,
-    GET_LEAD_TIME_FAIL,
-    GET_ERROR_SUCCESS,
-    GET_ERROR_FAIL,
-    GET_BP_DELIVERY_SUCCESS,
-    GET_BP_DELIVERY_FAIL,
-    GET_NOTIFICATION_SUCCESS,
-    GET_NOTIFICATION_FAIL,
-    GET_DASHBOARD_STOCK_SUCCESS,
-    GET_DASHBOARD_STOCK_FAIL,
-    STORE_DASHBOARD_DATA
-  } from "./actionTypes";
-  import moment from "moment";
-  const INIT_STATE = {
-    topBanner: [],
-    DisbursementGiftData: [],
-    dashboardCategory: [],
-    territoryData: [],
-    brandData: [],
-    partnerData: [],
-    leadData: [],
-    errorData: [],
-    bpDelivery: [],
-    notificationData: [],
-    dashboardStock: [],
-    startDateRange :  "All",
-    endDateRange : "All",
-    topBannerLoading: true,
-    DisbursementGiftDataLoading: true,
-    dashboardCategoryLoading: true,
-    brandDataLoading: true,
-    partnerDataLoading: true,
-    leadDataLoading: true,
-    errorLoading: true,
-    bpDeliveryLoading: true,
-    notificationLoading: true,
-    dashboardStockLoading: true
- 
-  };
-  const DashboardReducer = (state = INIT_STATE, action) => {
-    switch (action.type) {
-      case GET_TOP_BANNER_SUCCESS:
-        return {
-          ...state,
-          topBanner: action.payload,
-          topBannerLoading: false,
-        };
-      case GET_TOP_BANNER_FAIL:
-        return {
-          ...state,
-          error: action.payload,
-          topBannerLoading: false,
-        };
-      case GET_GIFT_DISBURSEMENT_SUCCESS:
-        return {
-          ...state,
-          DisbursementGiftData: action.payload,
-          DisbursementGiftDataLoading: false,
-        };
-      case GET_GIFT_DISBURSEMENT_FAIL:
-        return {
-          ...state,
-          error: action.payload,
-          DisbursementGiftDataLoading: false,
-        };
-      case GET_DASHBOARD_CATEGORY_SUCCESS:
-        return {
-          ...state,
-          dashboardCategory: action.payload,
-          dashboardCategoryLoading: false,
-        };
-      case GET_DASHBOARD_CATEGORY_FAIL:
-        return {
-          ...state,
-          error: action.payload,
-          dashboardCategoryLoading: false,
-        };
-        case GET_DASHBOARD_BRAND_SUCCESS:
-            return {
-              ...state,
-              brandData: action.payload,
-              brandDataLoading: false,
-            };
-          case GET_DASHBOARD_BRAND_FAIL:
-            return {
-              ...state,
-              error: action.payload,
-              brandDataLoading: false,
-            };
+  GET_DASHBOARD_CALORIES_DATA,
+  GET_DASHBOARD_CALORIES_DATA_FAIL,
+  GET_DASHBOARD_CALORIES_DATA_SUCCESS,
+  GET_DASHBOARD_DISTANCE_DATA,
+  GET_DASHBOARD_DISTANCE_DATA_FAIL,
+  GET_DASHBOARD_DISTANCE_DATA_SUCCESS,
+  GET_DASHBOARD_ELEVATION_DATA,
+  GET_DASHBOARD_ELEVATION_DATA_FAIL,
+  GET_DASHBOARD_ELEVATION_DATA_SUCCESS,
+  GET_DASHBOARD_FLOOR_DATA,
+  GET_DASHBOARD_FLOOR_DATA_FAIL,
+  GET_DASHBOARD_FLOOR_DATA_SUCCESS,
+  GET_DASHBOARD_HEART_DATA,
+  GET_DASHBOARD_HEART_DATA_FAIL,
+  GET_DASHBOARD_HEART_DATA_SUCCESS,
+  GET_DASHBOARD_STEP_DATA,
+  GET_DASHBOARD_STEP_DATA_FAIL,
+  GET_DASHBOARD_STEP_DATA_SUCCESS,
+  STORE_DASHBOARD_DATA,
+} from "./actionTypes";
 
-            case GET_DASHBOARD_PARTNER_SUCCESS:
-                return {
-                  ...state,
-                  partnerData: action.payload,
-                  partnerDataLoading: false,
-                };
-              case GET_DASHBOARD_PARTNER_FAIL:
-                return {
-                  ...state,
-                  error: action.payload,
-                  partnerDataLoading: false,
-                };
+const INIT_STATE = {
+  heartData: [],
+  stepData: [],
+  elevationData: [],
+  floorData: [],
+  distanceData: [],
+  caloriesData: [],
+  startDateRange: moment(new Date()).format("YYYY-MM-DD"),
+  endDateRange: moment(new Date()).format("YYYY-MM-DD"),
+  heartDataLoading: false,
+  stepDataLoading: false,
+  elevationDataLoading: false,
+  floorDataLoading: false,
+  distanceDataLoading: false,
+  caloriesDataLoading: false,
+};
 
-                case GET_LEAD_TIME_SUCCESS:
-                    return {
-                      ...state,
-                      leadData: action.payload,
-                      leadDataLoading: false,
-                    };
-                  case GET_LEAD_TIME_FAIL:
-                    return {
-                      ...state,
-                      error: action.payload,
-                      leadDataLoading: false,
-                    };
-                    case GET_ERROR_SUCCESS:
-                        return {
-                          ...state,
-                          errorData: action.payload,
-                          errorLoading: false,
-                        };
-                      case GET_ERROR_FAIL:
-                        return {
-                          ...state,
-                          error: action.payload,
-                          errorLoading: false,
-                        };
-                        case GET_BP_DELIVERY_SUCCESS:
-                          return {
-                            ...state,
-                            bpDelivery: action.payload,
-                            bpDeliveryLoading: false,
-                          };
-                        case GET_BP_DELIVERY_FAIL:
-                          return {
-                            ...state,
-                            error: action.payload,
-                            bpDeliveryLoading: false,
-                          };
-                          case GET_NOTIFICATION_SUCCESS:
-                            return {
-                              ...state,
-                              notificationData: action.payload,
-                              notificationLoading: false,
-                            };
-                          case GET_NOTIFICATION_FAIL:
-                            return {
-                              ...state,
-                              error: action.payload,
-                              notificationLoading: false,
-                            };
-                            case GET_DASHBOARD_STOCK_SUCCESS:
-                              return {
-                                ...state,
-                                dashboardStock: action.payload,
-                                dashboardStockLoading: false,
-                              };
-                            case GET_DASHBOARD_STOCK_FAIL:
-                              return {
-                                ...state,
-                                error: action.payload,
-                                dashboardStockLoading: false,
-                              };
-                        case STORE_DASHBOARD_DATA:
-                          return {
-                            ...state,
-                            [action.payload.name]: action.payload.data,
-                          };
+const DashboardReducer = (state = INIT_STATE, action) => {
+  switch (action.type) {
+    case GET_DASHBOARD_HEART_DATA:
+      return {
+        ...state,
 
-                
+        heartDataLoading: true,
+      };
 
-      default:
-        return state;
-    }
-  };
-  export default DashboardReducer;
-  
+    case GET_DASHBOARD_HEART_DATA_SUCCESS:
+      return {
+        ...state,
+        heartData: action.payload.data,
+        heartDataLoading: false,
+      };
+    case GET_DASHBOARD_HEART_DATA_FAIL:
+      return {
+        ...state,
+        heartDataLoading: false,
+      };
+
+    case GET_DASHBOARD_STEP_DATA:
+      return {
+        ...state,
+
+        stepDataLoading: true,
+      };
+
+    case GET_DASHBOARD_STEP_DATA_SUCCESS:
+      return {
+        ...state,
+        stepData: action.payload.data,
+        stepDataLoading: false,
+      };
+    case GET_DASHBOARD_STEP_DATA_FAIL:
+      return {
+        ...state,
+        stepDataLoading: false,
+      };
+
+    case GET_DASHBOARD_CALORIES_DATA:
+      return {
+        ...state,
+
+        caloriesDataLoading: true,
+      };
+
+    case GET_DASHBOARD_CALORIES_DATA_SUCCESS:
+      return {
+        ...state,
+        caloriesData: action.payload.data,
+        caloriesDataLoading: false,
+      };
+    case GET_DASHBOARD_CALORIES_DATA_FAIL:
+      return {
+        ...state,
+        caloriesDataLoading: false,
+      };
+    case GET_DASHBOARD_DISTANCE_DATA:
+      return {
+        ...state,
+
+        distanceDataLoading: true,
+      };
+
+    case GET_DASHBOARD_DISTANCE_DATA_SUCCESS:
+      return {
+        ...state,
+        distanceData: action.payload.data,
+        distanceDataLoading: false,
+      };
+    case GET_DASHBOARD_DISTANCE_DATA_FAIL:
+      return {
+        ...state,
+        distanceDataLoading: false,
+      };
+
+    case GET_DASHBOARD_FLOOR_DATA:
+      return {
+        ...state,
+
+        floorDataLoading: true,
+      };
+
+    case GET_DASHBOARD_FLOOR_DATA_SUCCESS:
+      return {
+        ...state,
+        floorData: action.payload.data,
+        floorDataLoading: false,
+      };
+    case GET_DASHBOARD_FLOOR_DATA_FAIL:
+      return {
+        ...state,
+        floorDataLoading: false,
+      };
+
+    case GET_DASHBOARD_ELEVATION_DATA:
+      return {
+        ...state,
+
+        elevationDataLoading: true,
+      };
+
+    case GET_DASHBOARD_ELEVATION_DATA_SUCCESS:
+      return {
+        ...state,
+        elevationData: action.payload.data,
+        elevationDataLoading: false,
+      };
+    case GET_DASHBOARD_ELEVATION_DATA_FAIL:
+      return {
+        ...state,
+        elevationDataLoading: false,
+      };
+    case STORE_DASHBOARD_DATA:
+      return {
+        ...state,
+        [action.payload.name]: action.payload.data,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export default DashboardReducer;

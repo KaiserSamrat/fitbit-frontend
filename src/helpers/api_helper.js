@@ -1,5 +1,5 @@
 import axios from 'axios';
-export const API_URL = "https://flinder-health-care.onrender.com/api/v1";
+export const API_URL = "http://139.59.21.48/flinder/api/v1";
 
 //user account managemnet
 export const axiosUserLogin = async (id, password) =>

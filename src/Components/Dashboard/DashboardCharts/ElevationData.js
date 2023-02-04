@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Card } from "react-bootstrap";
-import {getBpDelivery} from '../../../store/Dashboard/action'
 import { useDispatch, useSelector } from "react-redux";
+import {getGiftDisbursement, getDashboardStock, getDashboardHeartData, getDashboardCaloriesData, getDashboardElevationData} from '../../../store/Dashboard/action'
 // import { Card, CardBody } from "reactstrap";
-const BpDelivery = () => {
-
+const ElevationData = () => {
   const dispatch = useDispatch();
-  const { startDateRange, endDateRange, authtoken, bpDelivery } =
+  const { startDateRange, endDateRange, authtoken, userId, elevationData } =
   useSelector((state) => ({
     authtoken: state.Login.token,
+    userId: state.Login.loginId,
     startDateRange: state.DashboardReducer.startDateRange,
     endDateRange:  state.DashboardReducer.endDateRange,
-    topBanner: state.DashboardReducer.topBanner,
-    bpDelivery: state.DashboardReducer.bpDelivery
+    elevationData: state.DashboardReducer.elevationData,
+   
   }));
 
-  let monthData = bpDelivery?.data?.month
-  let QuantityData = bpDelivery?.data?.unit
+console.log('elevationData', elevationData);
+
   useEffect(() => {
-    dispatch(getBpDelivery(authtoken, startDateRange, endDateRange));
-  }, [startDateRange, endDateRange]);
+    dispatch(getDashboardElevationData(authtoken, 'elevation', userId, startDateRange, endDateRange));
+  }, [startDateRange,endDateRange ]);
+
+let valueArray = []
+let dataArray = []
+for (let i = 0; i <elevationData?.data?.length; i++){
+  valueArray.push(elevationData?.data[i].value*1)
+  dataArray.push(elevationData?.data[i].dateString)
+}
+console.log('valueArray', valueArray);
   const options = {
     series: [
       {
-        name: 'Quantity',
-        data: QuantityData || [],
+        name: "Value",
+        data:valueArray|| [],
       },
     ],
     chart: {
@@ -38,7 +46,7 @@ const BpDelivery = () => {
       },
     },
     colors: [
-      "#FB9905",
+      "#f2ae0f",
     ],
     plotOptions: {
       bar: {
@@ -52,13 +60,15 @@ const BpDelivery = () => {
     legend: {
       show: false,
     },
+    
     xaxis: {
-      categories: monthData || [],
+      categories:  dataArray|| [],
       labels: {
         style: {
           // colors: colors,
           fontSize: "12px",
         },
+      
       },
       axisBorder: {
         show: false,
@@ -74,7 +84,7 @@ const BpDelivery = () => {
       <Card className="brandanalytic">
         <Card.Body>
           <div className="chart-title-top-content">
-            <h6 className="card-title">BP Delivery</h6>
+            <h6 className="card-title">Elevation data</h6>
           </div>
 
           <div>
@@ -95,4 +105,4 @@ const BpDelivery = () => {
     </>
   );
 };
-export default BpDelivery;
+export default ElevationData;

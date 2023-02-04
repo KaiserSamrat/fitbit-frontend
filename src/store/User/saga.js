@@ -35,6 +35,8 @@ import {
   accessTokenFail,
   getExtendTokenSuccess,
   getExtendTokenFail,
+  postUserDataSuccess,
+  postUserDataFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -49,6 +51,7 @@ import {
   GET_ACTIVITY_DATA,
   ACCESS_TOKEN,
   EXTEND_TOKEN,
+  POST_USER_DATA,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -217,6 +220,25 @@ function* fetchExtendToken({
     yield put(getExtendTokenFail(error));
   }
 }
+function* onPostUserData({ payload: { data, history, authtoken } }) {
+  try {
+    let response;
+    const url = "users/data-entry";
+    response = yield call(postData, url, data, authtoken);
+    console.log(response);
+    yield put(postUserDataSuccess(response));
+   
+   
+  } catch (error) {
+    if (!error.response) {
+    
+    } else {
+      let message = error.response.data.message;
+      yield put(postUserDataFail(message));
+      toast.error(message);
+    }
+  }
+}
 function* UserSaga() {
   yield takeEvery(ADD_USER, onAddNewUser);
   yield takeEvery(GET_ALL_USER, fetchUser);
@@ -228,6 +250,7 @@ function* UserSaga() {
   yield takeEvery(GENERATE_FITBIT_DATA, onGenerateFitbitData);
   yield takeEvery(GET_ACTIVITY_DATA, fetchActivityData);
   yield takeEvery(EXTEND_TOKEN, fetchExtendToken);
+  yield takeEvery(POST_USER_DATA, onPostUserData);
 }
 
 export default UserSaga;

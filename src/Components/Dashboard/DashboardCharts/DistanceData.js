@@ -2,43 +2,38 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import {getGiftDisbursement, getDashboardStock} from '../../../store/Dashboard/action'
+import {getGiftDisbursement, getDashboardStock, getDashboardHeartData, getDashboardCaloriesData, getDashboardDistanceData} from '../../../store/Dashboard/action'
 // import { Card, CardBody } from "reactstrap";
-const GiftDisbursement = () => {
+const DistanceData = () => {
   const dispatch = useDispatch();
-  const { startDateRange, endDateRange, authtoken, DisbursementGiftData, dashboardStock } =
+  const { startDateRange, endDateRange, authtoken, userId, distanceData } =
   useSelector((state) => ({
     authtoken: state.Login.token,
-    DisbursementGiftData : state.DashboardReducer.DisbursementGiftData,
-    dashboardStock: state.DashboardReducer.dashboardStock,
+    userId: state.Login.loginId,
     startDateRange: state.DashboardReducer.startDateRange,
     endDateRange:  state.DashboardReducer.endDateRange,
-    topBanner: state.DashboardReducer.topBanner
+    distanceData: state.DashboardReducer.distanceData,
+   
   }));
-  // console.log('dashboardStock',dashboardStock);
 
-  let hubData = []
-  let stockData = []
-  dashboardStock?.data?.stock?.map((data)=>{
-    hubData.push(data?.warehouses?.name)
-    stockData.push(data?.stock)
+console.log('distanceData', distanceData);
 
-  })
-  
-  // useEffect(() => {
-  //   dispatch(getGiftDisbursement(authtoken, startDateRange, endDateRange));
-  // }, [startDateRange, endDateRange]);
   useEffect(() => {
-    dispatch(getDashboardStock(authtoken));
-  }, []);
+    dispatch(getDashboardDistanceData(authtoken, 'distance', userId, startDateRange, endDateRange));
+  }, [startDateRange,endDateRange ]);
 
-  let monthData = DisbursementGiftData?.data?.month
-  let quantityData = DisbursementGiftData?.data?.unit
+let valueArray = []
+let dataArray = []
+for (let i = 0; i <distanceData?.data?.length; i++){
+  valueArray.push(distanceData?.data[i].value*1)
+  dataArray.push(distanceData?.data[i].dateString)
+}
+console.log('valueArray', valueArray);
   const options = {
     series: [
       {
-        name: "Quantity",
-        data: stockData || [],
+        name: "Value",
+        data:valueArray|| [],
       },
     ],
     chart: {
@@ -51,7 +46,7 @@ const GiftDisbursement = () => {
       },
     },
     colors: [
-      "#438EFE",
+      "#78de6a",
     ],
     plotOptions: {
       bar: {
@@ -67,7 +62,7 @@ const GiftDisbursement = () => {
     },
     
     xaxis: {
-      categories: hubData || [],
+      categories:  dataArray|| [],
       labels: {
         style: {
           // colors: colors,
@@ -89,7 +84,7 @@ const GiftDisbursement = () => {
       <Card className="brandanalytic">
         <Card.Body>
           <div className="chart-title-top-content">
-            <h6 className="card-title">Hub Stock Data (On hand Stock)</h6>
+            <h6 className="card-title">Distance data</h6>
           </div>
 
           <div>
@@ -110,4 +105,4 @@ const GiftDisbursement = () => {
     </>
   );
 };
-export default GiftDisbursement;
+export default DistanceData;

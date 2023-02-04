@@ -35,7 +35,10 @@ import {
   ACCESS_TOKEN_FAIL,
   EXTEND_TOKEN,
   EXTEND_TOKEN_SUCCESS,
-  EXTEND_TOKEN_FAIL
+  EXTEND_TOKEN_FAIL,
+  POST_USER_DATA,
+  POST_USER_DATA_SUCCESS,
+  POST_USER_DATA_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -193,7 +196,20 @@ export const getExtendTokenFail = (error) => ({
 });
 
 
+export const postUserData = (data, history, authtoken) => ({
+  type: POST_USER_DATA,
+  payload: { data, history, authtoken },
+});
 
+export const postUserDataSuccess = (data) => ({
+  type: POST_USER_DATA_SUCCESS,
+  payload: data,
+});
+
+export const postUserDataFail = (error) => ({
+  type: POST_USER_DATA_FAIL,
+  payload: error,
+});
 
 
 

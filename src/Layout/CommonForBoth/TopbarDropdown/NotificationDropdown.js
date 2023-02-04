@@ -25,26 +25,8 @@ const NotificationDropdown = (props) => {
     notificationData: state.DashboardReducer.notificationData,
   }));
 
-  useEffect(() => {
-    dispatch(getNotification(authtoken));
-  }, []);
-  let count = 0;
-  notificationData?.data?.data?.map((data) => {
-    if (data?.seen === false) {
-      count++;
-    }
-  
-  });
-  console.log("notificationData", notificationData);
-  console.log(count);
-  const handleNotification = (data) => {
-    let body = {
-      seen: true,
-    };
-    dispatch(updateNotification(body, history, authtoken, data?._id));
 
-    history.push(`/notification-challan/${data?.challanId}`);
-  };
+
   return (
     <>
       <Dropdown
@@ -60,7 +42,7 @@ const NotificationDropdown = (props) => {
         >
           <i className="bx bx-bell bx-tada" />
           <span className="badge badge-danger badge-pill">
-            {count}
+           
           </span>
         </DropdownToggle>
 
@@ -83,7 +65,7 @@ const NotificationDropdown = (props) => {
               return (
                 <>
                   <div className={data?.seen !== true ? "notification-inner-area" : ""}>
-                  <div className="media notification-info" onClick={() => handleNotification(data)}>
+                  <div className="media notification-info" >
                 
                     <div className="avatar-xs me-3">
                       <span className="avatar-title rounded-circle font-size-16" style={{background:"#E5ECF2"}}>

@@ -1,10 +1,13 @@
 import moment from "moment";
 import React, { useState } from "react";
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import XLSX from "xlsx";
 import { toast } from "react-toastify";
+import { postUserData } from "../../store/actions";
+import { useHistory } from "react-router-dom";
+import { API_URL } from "../../helpers/api_helper";
 const categories = [
   {
     name: "floors",
@@ -58,6 +61,8 @@ const categories1 = [
   },
 ];
 const DownloadData = () => {
+  const dispatch = useDispatch();
+  const history = useHistory()
   const [categoryRange, setCategoryRange] = useState("heart");
   const [categoryCurrent, setCategoryCurrent] = useState("heart");
   const [rangeDataLoading, setRangeDataLoading] = useState(false);
@@ -86,7 +91,7 @@ const DownloadData = () => {
   const handleCurrentDateExcel = () => {
     setCurrentDataLoading(true);
     fetch(
-      `https://flinder-health-care.onrender.com/api/v1/users/get-activity-data?activityName=${categoryCurrent}&startDate=${currentDate}&endDate=${currentDate}`,
+      `${API_URL}/users/get-activity-data?activityName=${categoryCurrent}&startDate=${currentDate}&endDate=${currentDate}`,
       {
         method: "GET",
 
@@ -241,9 +246,8 @@ const DownloadData = () => {
       downloadxls(newArray);
     }
   };
-  const downloadxls = (data) => {
-    console.log(XLSX.version);
-    const ws = XLSX.utils.json_to_sheet(data);
+  const downloadxls = (currrentData) => {
+    const ws = XLSX.utils.json_to_sheet(currrentData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
     XLSX.writeFile(wb, `${categoryCurrent} Data_${currentDate}.xlsx`);
@@ -254,7 +258,7 @@ const DownloadData = () => {
     setRangeDataLoading(true);
     console.log("hello");
     fetch(
-      `https://flinder-health-care.onrender.com/api/v1/users/get-activity-data?activityName=${categoryRange}&startDate=${startDate}&endDate=${endDate}`,
+      `${API_URL}/users/get-activity-data?activityName=${categoryRange}&startDate=${startDate}&endDate=${endDate}`,
       {
         method: "GET",
 
@@ -349,9 +353,13 @@ const DownloadData = () => {
       downloadxls1(newArray);
     }
   };
-  const downloadxls1 = (data) => {
-    console.log(XLSX.version);
-    const ws = XLSX.utils.json_to_sheet(data);
+  const downloadxls1 = (rangeData) => {
+   console.log('data', rangeData);
+   let obj={
+    data: rangeData
+  }
+  dispatch(postUserData(obj, history, authtoken));
+    const ws = XLSX.utils.json_to_sheet(rangeData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
     XLSX.writeFile(wb, `${categoryRange} Data.xlsx`);
