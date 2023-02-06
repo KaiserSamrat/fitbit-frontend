@@ -33,7 +33,7 @@ const DoctorList = ({ history }) => {
 
   let dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageRange, setPageRange] = useState(10);
+  const [pageRange, setPageRange] = useState(20);
   const [value, setValue] = useState("");
   const [doctorId, setDoctorId] = useState("");
   const [show, setShow] = useState(false);
@@ -140,7 +140,7 @@ const DoctorList = ({ history }) => {
                 >
                   <Input type="select" onChange={(e) => handleRange(e)}>
                     {/* <option defaultValue>Select...</option> */}
-                    <option value="10">10</option>
+                    <option value="20">20</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                   </Input>
@@ -196,19 +196,7 @@ const DoctorList = ({ history }) => {
                             <i className="bx bx-show mt-1"></i>
                           </button>
                         </OverlayTrigger>
-                        <OverlayTrigger
-                            placement="bottom"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={renderTooltipEdit}
-                          >
-                            <button
-                              onClick={() => handleDelete(data)}
-                              className="btn btn-outline-danger btn-sm"
-                              style={{ borderRadius: "10px" }}
-                            >
-                              <i className="bx bx-check-square mt-1"></i>
-                            </button>
-                          </OverlayTrigger>
+                      
                       </td>
                     </tr>
                   ))

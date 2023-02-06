@@ -51,7 +51,7 @@ console.log('loginUserResponse', loginUserResponse);
         history.push(`/admin-dashboard`);
       } 
       if (loginUserResponse?.user?.role === "DOCTOR") {
-        history.push(`/admin-dashboard`);
+        history.push(`/user`);
       } 
       else {
       

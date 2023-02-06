@@ -43,6 +43,7 @@ import {
   getPermissionFail,
   removeDoctorPermissionSuccess,
   removeDoctorPermissionFail,
+  getPermission,
 } from "./actions";
 import {
   ADD_USER,
@@ -193,8 +194,13 @@ function* onGivePermission({ payload: { data, history, authtoken } }) {
     
     console.log(response);
     yield put(giveDoctorPermissionSuccess(response));
-    let message = response?.data || "Permission Given Successfully";
-    toast.success(message);
+   
+    if(response?.status==="Failed"){
+      toaster("warning", "Permission already given!");
+    }
+    else{
+      toaster("success", "Permission Given Successfully!");
+    }
     history.push("/doctor");
   } catch (error) {
     if (!error.response) {
@@ -214,12 +220,12 @@ function* onRemovePermission({ payload: { data, history, authtoken, doctorId } }
     
     console.log(response);
     yield put(removeDoctorPermissionSuccess(response));
-    let message = response?.data || "Permission removed Successfully";
+    let message = "Permission removed Successfully";
     toast.success(message);
-    history.push("/doctor");
+    yield put(getPermission(authtoken));
   } catch (error) {
     if (!error.response) {
-      history.push("/doctor");
+      history.push("/permitted-doctor");
     } else {
       let message = error.response.data.message;
       yield put(removeDoctorPermissionFail(message));

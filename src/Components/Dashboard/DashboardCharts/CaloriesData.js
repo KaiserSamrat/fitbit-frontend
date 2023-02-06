@@ -50,7 +50,7 @@ for (let i = 0; i <caloriesData?.data?.length; i++){
     ],
     plotOptions: {
       bar: {
-        columnWidth: "15%",
+        columnWidth: "25%",
         distributed: true,
       },
     },

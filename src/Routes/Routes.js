@@ -8,6 +8,7 @@ import DoctorList from '../Components/User/DoctorList';
 import DownloadData from '../Components/User/DownloadData';
 import FitbitData from '../Components/User/FitbitData';
 import GenerateUrl from '../Components/User/GenerateUrl';
+import PermittedDoctor from '../Components/User/PermittedDoctor';
 
 
 
@@ -79,6 +80,12 @@ const protectedRoute = [
     component: PatientData,
     exact: true,
     roles: ['DOCTOR','ADMIN'],
+  },
+  {
+    path: '/permitted-doctor',
+    component: PermittedDoctor,
+    exact: true,
+    roles: ['USER','ADMIN'],
   },
 ];
 

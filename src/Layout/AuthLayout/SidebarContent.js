@@ -138,6 +138,20 @@ const SidebarContent = (props) => {
             
               </React.Fragment>
             ) : null}
+                 {userrole === "USER" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/permitted-doctor"  className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Permitted Doctors"}</span>
+               
+                  </Link>
+                </li>
+            
+              </React.Fragment>
+            ) : null}
                  {userrole === "DOCTOR" ? (
               <React.Fragment>
                 <li>

@@ -50,7 +50,7 @@ console.log('valueArray', valueArray);
     ],
     plotOptions: {
       bar: {
-        columnWidth: "15%",
+        columnWidth: "25%",
         distributed: true,
       },
     },
