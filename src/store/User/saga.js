@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import { call, delay, put, takeEvery } from "redux-saga/effects";
 import { toaster } from "../../helpers/custom/toaster";
-import { getData, postData, updateData } from "../../helpers/api_helper";
+import { deleteData, getData, postData, updateData } from "../../helpers/api_helper";
 import {
   addUserData,
   getUserData,
@@ -39,6 +39,10 @@ import {
   postUserDataFail,
   postHeartDataSuccess,
   postHeartDataFail,
+  getPermissionSuccess,
+  getPermissionFail,
+  removeDoctorPermissionSuccess,
+  removeDoctorPermissionFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -55,6 +59,8 @@ import {
   EXTEND_TOKEN,
   POST_USER_DATA,
   POST_HEART_DATA,
+  GET_PERMISSION,
+  REMOVE_PERMISSION,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -184,10 +190,11 @@ function* onGivePermission({ payload: { data, history, authtoken } }) {
     let response;
     const url = "/permission";
     response = yield call(postData, url, data, authtoken);
-    yield put(storeUserLoading("addingUser", false));
-    toaster("success", "Permission successfully!");
+    
     console.log(response);
     yield put(giveDoctorPermissionSuccess(response));
+    let message = response?.data || "Permission Given Successfully";
+    toast.success(message);
     history.push("/doctor");
   } catch (error) {
     if (!error.response) {
@@ -195,6 +202,27 @@ function* onGivePermission({ payload: { data, history, authtoken } }) {
     } else {
       let message = error.response.data.message;
       yield put(giveDoctorPermissionFail(message));
+      toast.error(message);
+    }
+  }
+}
+function* onRemovePermission({ payload: { data, history, authtoken, doctorId } }) {
+  try {
+    let response;
+    const url = `/permission/${doctorId}`;
+    response = yield call(deleteData, url, authtoken);
+    
+    console.log(response);
+    yield put(removeDoctorPermissionSuccess(response));
+    let message = response?.data || "Permission removed Successfully";
+    toast.success(message);
+    history.push("/doctor");
+  } catch (error) {
+    if (!error.response) {
+      history.push("/doctor");
+    } else {
+      let message = error.response.data.message;
+      yield put(removeDoctorPermissionFail(message));
       toast.error(message);
     }
   }
@@ -262,6 +290,18 @@ function* onPostHeartData({ payload: { data, history, authtoken } }) {
     }
   }
 }
+function* fetchPermissionData({
+  payload: { authtoken },
+}) {
+  try {
+    const url = `/permission`;
+    const response = yield call(getData, url, authtoken);
+
+    yield put(getPermissionSuccess(response));
+  } catch (error) {
+    yield put(getPermissionFail(error));
+  }
+}
 function* UserSaga() {
   yield takeEvery(ADD_USER, onAddNewUser);
   yield takeEvery(GET_ALL_USER, fetchUser);
@@ -275,6 +315,8 @@ function* UserSaga() {
   yield takeEvery(EXTEND_TOKEN, fetchExtendToken);
   yield takeEvery(POST_USER_DATA, onPostUserData);
   yield takeEvery(POST_HEART_DATA, onPostHeartData);
+  yield takeEvery(GET_PERMISSION, fetchPermissionData);
+  yield takeEvery(REMOVE_PERMISSION, onRemovePermission);
 }
 
 export default UserSaga;

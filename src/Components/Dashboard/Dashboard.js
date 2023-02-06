@@ -2,9 +2,7 @@ import moment from "moment";
 import axios from "axios";
 import "./dashboard.scss";
 
-import box from "./img/box.svg";
-import documentText from "./img/document-text.svg";
-import house from "./img/house.svg";
+
 
 import { toast } from "react-toastify";
 import React, { useEffect, useState } from "react";
@@ -13,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import BreadcrumbDashboard from "../../Breadcrumb/BreadcrumbDashboard";
 import { getTopBanner, storeDashboardData } from "../../store/Dashboard/action";
 import { getExtendToken } from "../../store/actions";
-import GiftDisbursement from "./DashboardCharts/CaloriesData";
+
 
 import CaloriesData from "./DashboardCharts/CaloriesData";
 import StepData from "./DashboardCharts/StepData";

@@ -41,7 +41,13 @@ import {
   POST_USER_DATA_FAIL,
   POST_HEART_DATA,
   POST_HEART_DATA_SUCCESS,
-  POST_HEART_DATA_FAIL
+  POST_HEART_DATA_FAIL,
+  GET_PERMISSION,
+  GET_PERMISSION_SUCCESS,
+  GET_PERMISSION_FAIL,
+  REMOVE_PERMISSION,
+  REMOVE_PERMISSION_SUCCESS,
+  REMOVE_PERMISSION_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -101,6 +107,21 @@ export const giveDoctorPermissionFail = (error) => ({
   type: GIVE_PERMISSION_FAIL,
   payload: error,
 });
+
+export const removeDoctorPermission = (data, history, authtoken, doctorId) => ({
+  type: REMOVE_PERMISSION,
+  payload: { data, history, authtoken, doctorId },
+});
+
+export const removeDoctorPermissionSuccess = (data) => ({
+  type: REMOVE_PERMISSION_SUCCESS,
+  payload: data,
+});
+
+export const removeDoctorPermissionFail = (error) => ({
+  type: REMOVE_PERMISSION_FAIL,
+  payload: error,
+});
 export const getUsers = (authtoken, Centralrole, value, currentPage, pageRange) => ({
   type: GET_ALL_USER,
   payload: { authtoken, Centralrole, value, currentPage, pageRange },
@@ -128,6 +149,19 @@ export const getUserDetailsSuccess = (data) => ({
 });
 export const getUserDetailsFail = (error) => ({
   type: GET_USER_DETAILS_FAIL,
+  payload: error,
+});
+export const getPermission = (authtoken) => ({
+  type: GET_PERMISSION,
+  payload: { authtoken },
+});
+
+export const getPermissionSuccess = (data) => ({
+  type: GET_PERMISSION_SUCCESS,
+  payload: { data },
+});
+export const getPermissionFail = (error) => ({
+  type: GET_PERMISSION_FAIL,
   payload: error,
 });
 

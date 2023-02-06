@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getDashboardHeartData} from '../../../store/Dashboard/action'
+
 import Select from "react-select";
+import { getDashboardHeartData } from "../../store/actions";
 // import { Card, CardBody } from "reactstrap";
 const categories1 = [
   {
@@ -24,7 +25,7 @@ const categories1 = [
   },
 
 ];
-const HeartData = () => {
+const PermittedHeartData = ({id}) => {
   const dispatch = useDispatch();
   const [categoryCurrent, setCategoryCurrent] = useState("Out of Range");
   const { startDateRange, endDateRange, authtoken, userId, heartData } =
@@ -40,7 +41,7 @@ const HeartData = () => {
 console.log('heartData', heartData);
 
   useEffect(() => {
-    dispatch(getDashboardHeartData(authtoken, 'heart', userId, startDateRange, endDateRange));
+    dispatch(getDashboardHeartData(authtoken, 'heart', id, startDateRange, endDateRange));
   }, [startDateRange,endDateRange ]);
 
 let caloriesOut = []
@@ -209,4 +210,4 @@ for (let i = 0; i <heartData?.data?.length; i++){
     </>
   );
 };
-export default HeartData;
+export default PermittedHeartData;

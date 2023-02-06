@@ -108,15 +108,17 @@ const SidebarContent = (props) => {
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{"Menu"} </li>
-          
-              <li>
-                <Link to="/admin-dashboard" className="">
-                  <i>
-                    <img src={icon1} alt="icon" />
-                  </i>
-                  <span>{"Dashboard"}</span>
-                </Link>
-              </li>
+          {
+            userrole === "USER" ?      <li>
+            <Link to="/admin-dashboard" className="">
+              <i>
+                <img src={icon1} alt="icon" />
+              </i>
+              <span>{"Dashboard"}</span>
+            </Link>
+          </li> :null
+          }
+        
           
          
 
@@ -143,7 +145,7 @@ const SidebarContent = (props) => {
                     <i>
                       <img src={profileCircle} alt="" />
                     </i>
-                    <span>{"Patients"}</span>
+                    <span>{"User List"}</span>
                 
                   </Link>
                 </li>
@@ -151,31 +153,37 @@ const SidebarContent = (props) => {
               </React.Fragment>
             ) : null}
             {/* hub */}
-        
-            <React.Fragment>
-                <li>
-                  <Link to="/generate-url"  className="">
-                    <i>
-                      <img src={profileCircle} alt="" />
-                    </i>
-                    <span>{"Generate url"}</span>
-                
-                  </Link>
-                </li>
+            {
+              userrole === "USER" ?   <React.Fragment>
+              <li>
+                <Link to="/generate-url"  className="">
+                  <i>
+                    <img src={profileCircle} alt="" />
+                  </i>
+                  <span>{"Generate url"}</span>
+              
+                </Link>
+              </li>
+          
+            </React.Fragment> : null
+            }
+        {
+          userrole === "USER" ? 
+          <React.Fragment>
+          <li>
+            <Link to="/data-download"  className="">
+              <i>
+                <img src={profileCircle} alt="" />
+              </i>
+              <span>{"Download Data"}</span>
+          
+            </Link>
+          </li>
+      
+        </React.Fragment>: null
+        }
+          
             
-              </React.Fragment>
-              <React.Fragment>
-                <li>
-                  <Link to="/data-download"  className="">
-                    <i>
-                      <img src={profileCircle} alt="" />
-                    </i>
-                    <span>{"Download Data"}</span>
-                
-                  </Link>
-                </li>
-            
-              </React.Fragment>
               {/* <React.Fragment>
                 <li>
                   <Link to="/fitbit-data"  className="">

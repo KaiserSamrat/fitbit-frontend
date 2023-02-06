@@ -2,6 +2,7 @@ import { Redirect } from 'react-router-dom';
 import Login from '../Components/Authentication/Login';
 
 import Dashboard from '../Components/Dashboard/Dashboard';
+import PatientData from '../Components/Doctor/PatientData';
 import AddUser from '../Components/User/AddUser';
 import DoctorList from '../Components/User/DoctorList';
 import DownloadData from '../Components/User/DownloadData';
@@ -71,7 +72,13 @@ const protectedRoute = [
     path: '/data-download',
     component: DownloadData,
     exact: true,
-    roles: ['USER', 'DOCTOR','ADMIN'],
+    roles: ['USER','ADMIN'],
+  },
+  {
+    path: '/patient-data/:id',
+    component: PatientData,
+    exact: true,
+    roles: ['DOCTOR','ADMIN'],
   },
 ];
 

@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Badge, Col, Input, Row, Spinner } from "reactstrap";
 import * as XLSX from "xlsx";
 import { get } from "../../helpers/api_helper";
-import { getUsers, giveDoctorPermission } from "../../store/User/actions";
+import { getUsers, giveDoctorPermission, removeDoctorPermission } from "../../store/User/actions";
 import SearchInput from "../Atoms/SearchInput";
 import CardComponent from "../Layout/CardComponent";
 import CustomTable from "../Layout/CustomTable";
@@ -18,7 +18,7 @@ const tableHead = ["No.", "Name", "Phone", "Role", "Email", "Action"];
 
 const renderTooltipEdit = (props) => (
   <Tooltip id="button-tooltip" {...props}>
-    Edit
+    Cancel
   </Tooltip>
 );
 const renderTooltipView = (props) => (
@@ -35,30 +35,38 @@ const DoctorList = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(10);
   const [value, setValue] = useState("");
-  const [doctorId, setDoctorId] = useState("")
+  const [doctorId, setDoctorId] = useState("");
   const [show, setShow] = useState(false);
-
+  const [deleteModal, setDeleteModal] = useState(false);
   const handleClose = () => setShow(false);
+  const handleCloseModal = () => setDeleteModal(false);
   const handleShow = (data) => {
-    if(data){
-        setDoctorId(data?._id)
-        setShow(true)
+    setShow(true);
+
+    if (data) {
+      setDoctorId(data?._id);
     }
-    
-   
+  };
+  const handleDelete = (data) => {
+    setDeleteModal(true);
+
+    if (data) {
+      setDoctorId(data?._id);
+    }
   };
 
-  const [loadingExcel, setLoadingExcel] = useState(false);
-  const { users, loading, authtoken, role,LoginId, getUserLoading } = useSelector(
-    (state) => ({
+  const { users, permissionLoading, authtoken, role, LoginId, getUserLoading, removePermissionLoading } =
+    useSelector((state) => ({
       users: state.UserReducer.users,
 
       getUserLoading: state.UserReducer.getUserLoading,
-      LoginId:state.Login.id,
+      LoginId: state.Login.loginId,
       authtoken: state.Login.token,
       role: state.Login.userrole,
-    })
-  );
+      permissionLoading: state.UserReducer.permissionLoading,
+      removePermissionLoading: state.UserReducer.removePermissionLoading,
+    }));
+    console.log('permissionLoading', permissionLoading);
   const [roleList, setRole] = useState(role);
   let totalPageNumber = Math.ceil(users?.length / pageRange);
   useEffect(() => {
@@ -79,15 +87,24 @@ const DoctorList = ({ history }) => {
   const handleRange = (e) => {
     setPageRange(e.target.value);
   };
-  const handleSubmit = () =>{
-   console.log('hello');
-   let body={
-    patient:LoginId,
-    doctor: doctorId
-   }
-   dispatch(giveDoctorPermission(body, history, authtoken));
-   setShow(false)
-  }
+  const handleSubmit = () => {
+    console.log("hello");
+    let body = {
+      patient: LoginId,
+      doctor: doctorId,
+    };
+    dispatch(giveDoctorPermission(body, history, authtoken));
+    setShow(false);
+  };
+  const handleSubmitDelete = () => {
+    console.log("hello");
+    let body = {
+      patient: LoginId,
+      doctor: doctorId,
+    };
+    dispatch(removeDoctorPermission(body, history, authtoken, doctorId));
+    setDeleteModal(false);
+  };
 
   return (
     <React.Fragment>
@@ -162,16 +179,11 @@ const DoctorList = ({ history }) => {
 
                       <td>{data?.phoneNumber}</td>
 
+                      <td>Doctor</td>
+                      <td>{data?.email}</td>
+
                       <td>
-                        Patient
-                      </td>
-                      <td>
-                      {data?.email}
-                      </td>
-                   
-                    
-                        <td>
-                          <OverlayTrigger
+                        <OverlayTrigger
                           placement="bottom"
                           delay={{ show: 250, hide: 400 }}
                           overlay={renderTooltipView}
@@ -179,28 +191,25 @@ const DoctorList = ({ history }) => {
                           <button
                             className="btn btn-secondary btn-sm me-2"
                             style={{ borderRadius: "10px" }}
-                            onClick={()=>handleShow(data)}
+                            onClick={() => handleShow(data)}
                           >
                             <i className="bx bx-show mt-1"></i>
                           </button>
                         </OverlayTrigger>
-                          {/* <OverlayTrigger
+                        <OverlayTrigger
                             placement="bottom"
                             delay={{ show: 250, hide: 400 }}
                             overlay={renderTooltipEdit}
                           >
                             <button
-                              onClick={() => {
-                                history.push(`/user/edit-user/${data?._id}`);
-                              }}
+                              onClick={() => handleDelete(data)}
                               className="btn btn-outline-danger btn-sm"
                               style={{ borderRadius: "10px" }}
                             >
-                              <i className="bx bx-edit mt-1"></i>
+                              <i className="bx bx-check-square mt-1"></i>
                             </button>
-                          </OverlayTrigger> */}
-                        </td>
-                     
+                          </OverlayTrigger>
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -239,15 +248,48 @@ const DoctorList = ({ history }) => {
             >
               Cancel
             </Button>
-            {false ? (
-                    <div className="d-flex justify-content-end mt-3">
-                      <Spinner className="ms-2" color="primary" />
-                    </div>
-                  ) : (
-            <Button className="btn button" onClick={handleSubmit}>
-              Yes, I’m Sure
+            {permissionLoading ? (
+              <div className="d-flex justify-content-end mt-3">
+                <Spinner className="ms-2" color="primary" />
+              </div>
+            ) : (
+              <Button className="btn button" onClick={handleSubmit}>
+                Yes, I’m Sure
+              </Button>
+            )}
+          </Modal.Footer>
+        </Modal>
+        <Modal show={deleteModal} onHide={handleCloseModal} centered>
+          <Modal.Header
+            closeButton
+            style={{ borderBottom: "none" }}
+          ></Modal.Header>
+          <Modal.Body className="text-center">
+            <div className="mb-4">
+              {/* <img src="" alt="Image" style={{ width: "76px" }} /> */}
+            </div>
+            <h5>Are you want to remove this permission?</h5>
+          </Modal.Body>
+          <Modal.Footer
+            style={{ borderTop: "none", justifyContent: "center" }}
+            className="mb-4"
+          >
+            <Button
+              variant="outline-secondary"
+              onClick={handleCloseModal}
+              style={{ width: "112px" }}
+            >
+              Cancel
             </Button>
-                  )}
+            {removePermissionLoading ? (
+              <div className="d-flex justify-content-end mt-3">
+                <Spinner className="ms-2" color="primary" />
+              </div>
+            ) : (
+              <Button className="btn button" onClick={handleSubmitDelete}>
+                Yes, I’m Sure
+              </Button>
+            )}
           </Modal.Footer>
         </Modal>
       </InnerLayer>

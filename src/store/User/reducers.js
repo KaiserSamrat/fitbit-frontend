@@ -26,7 +26,13 @@ import {
   GET_ACTIVITY_DATA_FAIL,
   ACCESS_TOKEN,
   ACCESS_TOKEN_SUCCESS,
-  ACCESS_TOKEN_FAIL
+  ACCESS_TOKEN_FAIL,
+  GET_PERMISSION,
+  GET_PERMISSION_SUCCESS,
+  GET_PERMISSION_FAIL,
+  REMOVE_PERMISSION,
+  REMOVE_PERMISSION_SUCCESS,
+  REMOVE_PERMISSION_FAIL
 } from "./actionTypes";
 const INIT_STATE = {
   users: [],
@@ -37,6 +43,7 @@ const INIT_STATE = {
   userLoading: true,
   editUserInfo: [],
   activityData: [],
+  permissionData: [],
   url:"",
   getUserLoading: true,
   superVisorLoading: true,
@@ -48,7 +55,10 @@ const INIT_STATE = {
   fitbitDataLoading: false,
   accessTokenLoading: false,
   urlLoading: false,
-  activityDataLoading: true
+  activityDataLoading: true,
+  permissionLoading: false,
+  permissionDataLoading: false,
+  removePermissionLoading: false
 };
 
 const UserReducer = (state = INIT_STATE, action) => {
@@ -112,25 +122,36 @@ const UserReducer = (state = INIT_STATE, action) => {
       case GIVE_PERMISSION:
         return {
           ...state,
-          addingUser: true,
+          permissionLoading: true,
         };
         case GIVE_PERMISSION_SUCCESS:
           return {
             ...state,
-            addingUser: false,
+            permissionLoading: false,
           };
       case GIVE_PERMISSION_FAIL:
         return {
           ...state,
           error: action.payload,
-          addingUser: false,
+          permissionLoading: false,
         };
-
-        return {
-          ...state,
-          error: action.payload,
-          accessTokenLoading: false,
-        };
+        case REMOVE_PERMISSION:
+          return {
+            ...state,
+            removePermissionLoading: true,
+          };
+          case REMOVE_PERMISSION_SUCCESS:
+            return {
+              ...state,
+              removePermissionLoading: false,
+            };
+        case REMOVE_PERMISSION_FAIL:
+          return {
+            ...state,
+            error: action.payload,
+            removePermissionLoading: false,
+          };
+      
     case GET_ALL_USER_SUCCESS:
       return {
         ...state,
@@ -179,6 +200,27 @@ const UserReducer = (state = INIT_STATE, action) => {
         ...state,
         activityDataLoading: false,
       };
+
+      
+    case GET_PERMISSION:
+      return {
+        ...state,
+
+        permissionDataLoading: true,
+      };
+
+    case GET_PERMISSION_SUCCESS:
+      return {
+        ...state,
+        permissionData: action.payload.data,
+        permissionDataLoading: false,
+      };
+    case GET_PERMISSION_FAIL:
+      return {
+        ...state,
+        permissionDataLoading: false,
+      };
+
     case STORE_USER_DATA:
       return {
         ...state,
