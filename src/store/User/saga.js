@@ -37,6 +37,8 @@ import {
   getExtendTokenFail,
   postUserDataSuccess,
   postUserDataFail,
+  postHeartDataSuccess,
+  postHeartDataFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -52,6 +54,7 @@ import {
   ACCESS_TOKEN,
   EXTEND_TOKEN,
   POST_USER_DATA,
+  POST_HEART_DATA,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -79,7 +82,7 @@ function* onGenerateUrl({ payload: { data, history, authtoken } }) {
     let response;
     const url = "users/generate-url";
     response = yield call(postData, url, data, authtoken);
-    yield put(storeUserLoading("generateUrlLoading", false));
+   
     toaster("success", "Url Generated successfully!");
     if(response.status==="success")
     yield put(generateUrlSuccess(response?.data));
@@ -239,6 +242,26 @@ function* onPostUserData({ payload: { data, history, authtoken } }) {
     }
   }
 }
+function* onPostHeartData({ payload: { data, history, authtoken } }) {
+  try {
+    let response;
+    console.log();
+    const url = "users/data-entry-heart";
+    response = yield call(postData, url, data, authtoken);
+    console.log(response);
+    yield put(postHeartDataSuccess(response));
+   
+   
+  } catch (error) {
+    if (!error.response) {
+    
+    } else {
+      let message = error.response.data.message;
+      yield put(postHeartDataFail(message));
+      toast.error(message);
+    }
+  }
+}
 function* UserSaga() {
   yield takeEvery(ADD_USER, onAddNewUser);
   yield takeEvery(GET_ALL_USER, fetchUser);
@@ -251,6 +274,7 @@ function* UserSaga() {
   yield takeEvery(GET_ACTIVITY_DATA, fetchActivityData);
   yield takeEvery(EXTEND_TOKEN, fetchExtendToken);
   yield takeEvery(POST_USER_DATA, onPostUserData);
+  yield takeEvery(POST_HEART_DATA, onPostHeartData);
 }
 
 export default UserSaga;

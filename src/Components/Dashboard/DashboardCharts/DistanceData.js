@@ -16,7 +16,7 @@ const DistanceData = () => {
    
   }));
 
-console.log('distanceData', distanceData);
+
 
   useEffect(() => {
     dispatch(getDashboardDistanceData(authtoken, 'distance', userId, startDateRange, endDateRange));
@@ -28,7 +28,7 @@ for (let i = 0; i <distanceData?.data?.length; i++){
   valueArray.push(distanceData?.data[i].value*1)
   dataArray.push(distanceData?.data[i].dateString)
 }
-console.log('valueArray', valueArray);
+
   const options = {
     series: [
       {

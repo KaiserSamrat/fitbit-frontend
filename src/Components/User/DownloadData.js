@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
 import XLSX from "xlsx";
 import { toast } from "react-toastify";
-import { postUserData } from "../../store/actions";
+import { postHeartData, postUserData } from "../../store/actions";
 import { useHistory } from "react-router-dom";
 import { API_URL } from "../../helpers/api_helper";
 const categories = [
@@ -295,20 +295,27 @@ const DownloadData = () => {
       downloadxls1(newArray);
     }
     if (categoryRange === "heart") {
+      console.log(fitbitData?.data?.["activities-heart"],'klklkl');
+      let body={
+        data: fitbitData?.data?.["activities-heart"]
+      }
+      console.log('body', body);
+      dispatch(postHeartData(body, history, authtoken));
+
       fitbitData?.data?.["activities-heart"].forEach((info, index) => {
-        let data = {};
-        data.category = categoryRange;
-        data.date = info?.dateTime || "";
-        data.heartRateZones = info?.value?.heartRateZones?.forEach(
+        let heartData = {};
+        heartData.category = categoryRange;
+        heartData.date = info?.dateTime || "";
+        heartData.heartRateZones = info?.value?.heartRateZones?.forEach(
           (dt, idx) => {
-            data[` name-${idx + 1}`] = dt?.name;
-            data[` caloriesOut-${idx + 1}`] = dt?.caloriesOut;
-            data[` min-${idx + 1}`] = dt?.min;
-            data[` max-${idx + 1}`] = dt?.max;
-            data[` minutes-${idx + 1}`] = dt?.minutes;
+            heartData[` name-${idx + 1}`] = dt?.name;
+            heartData[` caloriesOut-${idx + 1}`] = dt?.caloriesOut;
+            heartData[` min-${idx + 1}`] = dt?.min;
+            heartData[` max-${idx + 1}`] = dt?.max;
+            heartData[` minutes-${idx + 1}`] = dt?.minutes;
           }
         );
-        newArray.push(data);
+        newArray.push(heartData);
       });
       downloadxls1(newArray);
     }
@@ -358,7 +365,11 @@ const DownloadData = () => {
    let obj={
     data: rangeData
   }
-  dispatch(postUserData(obj, history, authtoken));
+  
+  if(categoryRange !== "heart"){
+    dispatch(postUserData(obj, history, authtoken));
+  }
+ 
     const ws = XLSX.utils.json_to_sheet(rangeData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "SheetJS");

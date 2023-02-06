@@ -14,7 +14,7 @@ function* fetchDashboardHeartData({
     payload: { authtoken, categoryType, userId, startDate, endDate },
 }) {
   try {
-    const url = `users/dashboard-data?categoryType=${categoryType}&userId=${"63a293f54ccdb33644f66c26"}&startDate=${"2023-01-01"}&endDate=${"2023-01-02"}`
+    const url = `users/data-heart?userId=${userId}&startDate=${startDate}&endDate=${endDate}`
     const response = yield call(getData, url, authtoken);
 
     yield put(getDashboardHeartSuccess(response));

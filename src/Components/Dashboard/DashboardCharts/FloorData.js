@@ -16,7 +16,7 @@ const FloorData = () => {
    
   }));
 
-console.log('floorData', floorData);
+
 
   useEffect(() => {
     dispatch(getDashboardFloorData(authtoken, 'floors', userId, startDateRange, endDateRange));

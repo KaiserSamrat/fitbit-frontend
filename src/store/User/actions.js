@@ -38,7 +38,10 @@ import {
   EXTEND_TOKEN_FAIL,
   POST_USER_DATA,
   POST_USER_DATA_SUCCESS,
-  POST_USER_DATA_FAIL
+  POST_USER_DATA_FAIL,
+  POST_HEART_DATA,
+  POST_HEART_DATA_SUCCESS,
+  POST_HEART_DATA_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -211,7 +214,20 @@ export const postUserDataFail = (error) => ({
   payload: error,
 });
 
+export const postHeartData = (data, history, authtoken) => ({
+  type: POST_HEART_DATA,
+  payload: { data, history, authtoken },
+});
 
+export const postHeartDataSuccess = (data) => ({
+  type: POST_HEART_DATA_SUCCESS,
+  payload: data,
+});
+
+export const postHeartDataFail = (error) => ({
+  type: POST_HEART_DATA_FAIL,
+  payload: error,
+});
 
 
 

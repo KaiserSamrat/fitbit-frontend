@@ -16,7 +16,7 @@ const CaloriesData = () => {
    
   }));
 
-console.log('caloriesData', caloriesData);
+
 
   useEffect(() => {
     dispatch(getDashboardCaloriesData(authtoken, 'calories', userId, startDateRange, endDateRange));
@@ -28,7 +28,7 @@ for (let i = 0; i <caloriesData?.data?.length; i++){
   valueArray.push(caloriesData?.data[i].value*1)
   dataArray.push(caloriesData?.data[i].dateString)
 }
-console.log('valueArray', valueArray);
+
   const options = {
     series: [
       {

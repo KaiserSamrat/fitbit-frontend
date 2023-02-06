@@ -23,6 +23,7 @@ import ElevationData from "./DashboardCharts/ElevationData";
 import { API_URL } from "../../helpers/api_helper";
 import XLSX from "xlsx";
 import Select from "react-select";
+import HeartData from "./DashboardCharts/HeartData";
 const categories1 = [
   {
     name: "floors",
@@ -63,19 +64,22 @@ const Dashboard = () => {
     moment(new Date()).format("YYYY-MM-DD")
   );
 
-  const { startDateRange, endDateRange, authtoken, fitbit } = useSelector((state) => ({
-    authtoken: state.Login.token,
-    fitbit: state.Login.fitbit,
-    startDateRange: state.DashboardReducer.startDateRange,
-    endDateRange: state.DashboardReducer.endDateRange,
-  }));
+  const { startDateRange, endDateRange, authtoken, fitbit } = useSelector(
+    (state) => ({
+      authtoken: state.Login.token,
+      fitbit: state.Login.fitbit,
+      startDateRange: state.DashboardReducer.startDateRange,
+      endDateRange: state.DashboardReducer.endDateRange,
+    })
+  );
   const handleStartDate = (e) => {
-
     setStartDate(e.target.value);
-    const  compareStartDay = moment(e.target.value).diff(moment(endDate), 'days');
+    const compareStartDay = moment(e.target.value).diff(
+      moment(endDate),
+      "days"
+    );
     console.log("compareStartDay", compareStartDay);
-    if(compareStartDay<0){
-      
+    if (compareStartDay < 0) {
       dispatch(
         storeDashboardData(
           "startDateRange",
@@ -83,13 +87,9 @@ const Dashboard = () => {
         )
       );
       dispatch(
-        storeDashboardData(
-          "endDateRange",
-          moment(endDate).format("YYYY-MM-DD")
-        )
+        storeDashboardData("endDateRange", moment(endDate).format("YYYY-MM-DD"))
       );
-    }
-    else{
+    } else {
       toast("Start date can not be Larger than End date", {
         position: "top-right",
         autoClose: 3000,
@@ -98,14 +98,16 @@ const Dashboard = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
+      });
     }
-  
   };
   const handleEndDate = (e) => {
     setEndDate(e.target.value);
-    const  compareEndDay = moment(e.target.value).diff(moment(startDate), 'days');
-    if(compareEndDay>-1){
+    const compareEndDay = moment(e.target.value).diff(
+      moment(startDate),
+      "days"
+    );
+    if (compareEndDay > -1) {
       dispatch(
         storeDashboardData(
           "startDateRange",
@@ -118,8 +120,7 @@ const Dashboard = () => {
           moment(e.target.value).format("YYYY-MM-DD")
         )
       );
-    }
-    else{
+    } else {
       toast("End date can not be smaller than From date", {
         position: "top-right",
         autoClose: 3000,
@@ -128,10 +129,8 @@ const Dashboard = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-      })
+      });
     }
-    
- 
   };
   const handleCurrentDateExcel = () => {
     setCurrentDataLoading(true);
@@ -302,14 +301,18 @@ const Dashboard = () => {
     setCurrentDate(e.target.value);
   };
   const handleCurrentDateCategory = (data) => {
-    if(data?.value){
+    if (data?.value) {
       setCategoryCurrent(data?.value);
+    } else {
+      setCategoryCurrent("heart");
     }
-    else{
-      setCategoryCurrent('heart')
-   
   };
-}
+  useEffect(() => {
+    if(fitbit===true){
+      dispatch(getExtendToken(authtoken));
+    }
+    
+  }, []);
   return (
     <Container fluid>
       <BreadcrumbDashboard leftTitle="Dashboard" />
@@ -387,25 +390,20 @@ const Dashboard = () => {
             <CaloriesData />
           </Col>
           <Col lg={12}>
-            <StepData/>
-           
+            <StepData />
           </Col>
 
           <Col lg={12}>
-            <DistanceData/>
-           
+            <DistanceData />
           </Col>
           <Col lg={12}>
-            <FloorData/>
-           
+            <FloorData />
           </Col>
-        
+
           <Col lg={12}>
-         <ElevationData/>
+            <ElevationData />
           </Col>
-          <Col lg={4}>
-            
-          </Col>
+          <Col lg={12}><HeartData/></Col>
         </Row>
       </div>
     </Container>

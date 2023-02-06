@@ -16,7 +16,7 @@ const StepData = () => {
    
   }));
 
-console.log('stepData', stepData);
+
 
   useEffect(() => {
     dispatch(getDashboardStepData(authtoken, 'steps', userId, startDateRange, endDateRange));

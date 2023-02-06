@@ -16,7 +16,7 @@ const ElevationData = () => {
    
   }));
 
-console.log('elevationData', elevationData);
+
 
   useEffect(() => {
     dispatch(getDashboardElevationData(authtoken, 'elevation', userId, startDateRange, endDateRange));
@@ -28,7 +28,7 @@ for (let i = 0; i <elevationData?.data?.length; i++){
   valueArray.push(elevationData?.data[i].value*1)
   dataArray.push(elevationData?.data[i].dateString)
 }
-console.log('valueArray', valueArray);
+
   const options = {
     series: [
       {
