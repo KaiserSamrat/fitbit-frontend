@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Badge, Col, Input, Row, Spinner } from "reactstrap";
 import * as XLSX from "xlsx";
 import { get } from "../../helpers/api_helper";
-import { getUsers, giveDoctorPermission, removeDoctorPermission } from "../../store/User/actions";
+import { getPermission, getUsers, giveDoctorPermission, removeDoctorPermission, updateDoctorPermission } from "../../store/User/actions";
 import SearchInput from "../Atoms/SearchInput";
 import CardComponent from "../Layout/CardComponent";
 import CustomTable from "../Layout/CustomTable";
@@ -55,7 +55,7 @@ const DoctorList = ({ history }) => {
     }
   };
 
-  const { users, permissionLoading, authtoken, role, LoginId, getUserLoading, removePermissionLoading } =
+  const { users, permissionLoading, authtoken, role, LoginId, permissionDataLoading, removePermissionLoading, permissionData } =
     useSelector((state) => ({
       users: state.UserReducer.users,
 
@@ -63,25 +63,33 @@ const DoctorList = ({ history }) => {
       LoginId: state.Login.loginId,
       authtoken: state.Login.token,
       role: state.Login.userrole,
+      permissionData:  state.UserReducer.permissionData,
+      permissionDataLoading:  state.UserReducer.permissionDataLoading,
       permissionLoading: state.UserReducer.permissionLoading,
       removePermissionLoading: state.UserReducer.removePermissionLoading,
     }));
-    console.log('permissionLoading', permissionLoading);
+    console.log('permissionData', permissionData);
   const [roleList, setRole] = useState(role);
   let totalPageNumber = Math.ceil(users?.length / pageRange);
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (value !== "") {
-        console.log("value", value);
-        dispatch(getUsers(authtoken, roleList, value, currentPage, pageRange));
-      }
-    }, 1000);
+  // useEffect(() => {
+  //   const delayDebounceFn = setTimeout(() => {
+  //     if (value !== "") {
+  //       console.log("value", value);
+  //       dispatch(getUsers(authtoken, roleList, value, currentPage, pageRange));
+  //     }
+  //   }, 1000);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [value]);
-  useEffect(() => {
-    dispatch(getUsers(authtoken, "DOCTOR", value, currentPage, pageRange));
-  }, [currentPage, pageRange, roleList, value]);
+  //   return () => clearTimeout(delayDebounceFn);
+  // }, [value]);
+  // useEffect(() => {
+  //   dispatch(getUsers(authtoken, "DOCTOR", value, currentPage, pageRange));
+  // }, [currentPage, pageRange, roleList, value]);
+  useEffect(()=>{
+    if(role==="USER"){
+      dispatch(getPermission(authtoken, false))
+    }
+    
+  },[])
 
   console.log("users", users);
   const handleRange = (e) => {
@@ -90,10 +98,9 @@ const DoctorList = ({ history }) => {
   const handleSubmit = () => {
     console.log("hello");
     let body = {
-      patient: LoginId,
-      doctor: doctorId,
+      permitted : true
     };
-    dispatch(giveDoctorPermission(body, history, authtoken));
+    dispatch(updateDoctorPermission(body, history, authtoken, doctorId));
     setShow(false);
   };
   const handleSubmitDelete = () => {
@@ -109,12 +116,12 @@ const DoctorList = ({ history }) => {
   return (
     <React.Fragment>
       <InnerLayer
-        title="User List"
+        title="Doctor List"
         wrapperClass="py-3 users"
         isBreadCrumb={true}
         link={"#"}
-        mainTitle={"User"}
-        subTitle={"user List"}
+        mainTitle={"Doctor"}
+        subTitle={"Doctor List"}
         buttonText="Create New"
       >
         <Row>
@@ -158,7 +165,7 @@ const DoctorList = ({ history }) => {
                 setCurrentPage={setCurrentPage}
                 isPagination
               >
-                {getUserLoading ? (
+                {permissionDataLoading ? (
                   <tr style={{ width: "100%" }}>
                     <div
                       className="text-center my-5 py-5 d-flex justify-content-center w-100 h-100"
@@ -169,18 +176,18 @@ const DoctorList = ({ history }) => {
                       </div>
                     </div>
                   </tr>
-                ) : users?.length > 0 ? (
-                  users?.data?.map((data, idx) => (
+                ) : permissionData?.data?.length > 0 ? (
+                  permissionData?.data?.map((data, idx) => (
                     <tr>
                       <th scope="row" style={{ paddingLeft: "25px" }}>
                         {idx + 1}
                       </th>
-                      <td>{data?.name}</td>
+                      <td>{data?.doctor?.name}</td>
 
-                      <td>{data?.phoneNumber}</td>
+                      <td>{data?.doctor?.name}</td>
 
                       <td>Doctor</td>
-                      <td>{data?.email}</td>
+                      <td>{data?.doctor?.email}</td>
 
                       <td>
                         <OverlayTrigger

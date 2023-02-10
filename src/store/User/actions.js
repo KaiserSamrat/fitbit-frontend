@@ -47,7 +47,10 @@ import {
   GET_PERMISSION_FAIL,
   REMOVE_PERMISSION,
   REMOVE_PERMISSION_SUCCESS,
-  REMOVE_PERMISSION_FAIL
+  REMOVE_PERMISSION_FAIL,
+  UPDATE_PERMISSION,
+  UPDATE_PERMISSION_SUCCESS,
+  UPDATE_PERMISSION_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -108,6 +111,22 @@ export const giveDoctorPermissionFail = (error) => ({
   payload: error,
 });
 
+export const updateDoctorPermission = (data, history, authtoken, id) => ({
+  type: UPDATE_PERMISSION,
+  payload: { data, history, authtoken, id },
+});
+
+export const updateDoctorPermissionSuccess = (data) => ({
+  type: UPDATE_PERMISSION_SUCCESS,
+  payload: data,
+});
+
+export const updateDoctorPermissionFail = (error) => ({
+  type: UPDATE_PERMISSION_FAIL,
+  payload: error,
+});
+
+
 export const removeDoctorPermission = (data, history, authtoken, doctorId) => ({
   type: REMOVE_PERMISSION,
   payload: { data, history, authtoken, doctorId },
@@ -151,9 +170,9 @@ export const getUserDetailsFail = (error) => ({
   type: GET_USER_DETAILS_FAIL,
   payload: error,
 });
-export const getPermission = (authtoken) => ({
+export const getPermission = (authtoken, type) => ({
   type: GET_PERMISSION,
-  payload: { authtoken },
+  payload: { authtoken, type },
 });
 
 export const getPermissionSuccess = (data) => ({

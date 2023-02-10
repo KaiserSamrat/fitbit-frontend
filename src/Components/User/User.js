@@ -7,13 +7,13 @@ import Select from "react-select";
 import { Badge, Col, Input, Row, Spinner } from "reactstrap";
 import * as XLSX from "xlsx";
 import { get } from "../../helpers/api_helper";
-import { getPermission, getUsers } from "../../store/User/actions";
+import { getPermission, getUsers, giveDoctorPermission } from "../../store/User/actions";
 import SearchInput from "../Atoms/SearchInput";
 import CardComponent from "../Layout/CardComponent";
 import CustomTable from "../Layout/CustomTable";
 import InnerLayer from "../Layout/InnerLayer";
 import NoTableData from "../Layout/NoTableData";
-
+import { Button, Modal } from "react-bootstrap";
 const tableHead2 = [
   "No.",
 
@@ -39,32 +39,22 @@ const User = ({ history }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageRange, setPageRange] = useState(10);
   const [value, setValue] = useState("");
-
-  const { users, permissionDataLoading, authtoken, role, getUserLoading, permissionData, } =
+  const [show, setShow] = useState(false);
+  const [patientId, setPatientId] = useState("");
+  const handleClose = () => setShow(false);
+  const { users, permissionLoading, authtoken, role, getUserLoading, permissionData,LoginId } =
     useSelector((state) => ({
       users: state.UserReducer.users,
-
+      LoginId: state.Login.loginId,
       getUserLoading: state.UserReducer.getUserLoading,
       permissionData:  state.UserReducer.permissionData,
       permissionDataLoading:  state.UserReducer.permissionDataLoading,
       authtoken: state.Login.token,
       role: state.Login.userrole,
+      permissionLoading: state.UserReducer.permissionLoading,
     }));
-console.log('permissionData', permissionData);
+console.log('users', users);
   let totalPageNumber = Math.ceil(users?.users?.length / pageRange);
-  // useEffect(() => {
-  //   const delayDebounceFn = setTimeout(() => {
-  //     if (value !== "") {
-  //       console.log("value", value);
-  //       dispatch(getUsers(authtoken, "DOCTOR", value, currentPage, pageRange));
-  //     }
-  //   }, 1000);
-
-  //   return () => clearTimeout(delayDebounceFn);
-  // }, [value]);
-  // useEffect(() => {
-  //   dispatch(getUsers(authtoken, "USER", value, currentPage, pageRange));
-  // }, [currentPage, pageRange, value]);
 
 
   const handleRange = (e) => {
@@ -74,7 +64,25 @@ useEffect(()=>{
   dispatch(getPermission(authtoken));
 }, [])
 
+const handleShow = (data) => {
+  setShow(true);
 
+  if (data) {
+    setPatientId(data?._id);
+  }
+};
+useEffect(() => {
+  dispatch(getUsers(authtoken, "USER", value, currentPage, pageRange));
+}, [currentPage, pageRange, value]);
+const handleSubmit = () => {
+  console.log("hello");
+  let body = {
+    patient: patientId,
+    doctor: LoginId,
+  };
+  dispatch(giveDoctorPermission(body, history, authtoken));
+  setShow(false);
+};
   return (
     <React.Fragment>
       <InnerLayer
@@ -108,12 +116,12 @@ useEffect(()=>{
             <Row>
               <CustomTable
                 paginationClass="paginationContainer text-right"
-                data={permissionData?.data}
+                data={users?.data}
                 // pageNo={users?.pagenumber}
                 tableHead={tableHead2}
                 
               >
-                {permissionDataLoading ? (
+                {getUserLoading ? (
                   <tr style={{ width: "100%" }}>
                     <div
                       className="text-center my-5 py-5 d-flex justify-content-center w-100 h-100"
@@ -124,17 +132,17 @@ useEffect(()=>{
                       </div>
                     </div>
                   </tr>
-                ) : permissionData?.data?.length > 0 ? (
-                  permissionData?.data?.map((data, idx) => (
+                ) : users?.data?.length > 0 ? (
+                  users?.data?.map((data, idx) => (
                     <tr>
                       <th scope="row" style={{ paddingLeft: "25px" }}>
                         {idx + 1}
                       </th>
                       
-                      <td>{data?.patient?.name}</td>
-                      <td>{data?.patient?.email}</td>
+                      <td>{data?.name}</td>
+                      <td>{data?.email}</td>
 
-                      <td>{data?.patient?.phoneNumber}</td>
+                      <td>{data?.phoneNumber}</td>
 
                
                      
@@ -146,9 +154,7 @@ useEffect(()=>{
                             overlay={renderTooltipEdit}
                           >
                             <button
-                              onClick={() => {
-                                history.push(`/patient-data/${data?.patient?._id}`);
-                              }}
+                           onClick={() => handleShow(data)}
                               className="btn btn-outline-info btn-sm"
                               style={{ borderRadius: "10px" }}
                             >
@@ -174,6 +180,39 @@ useEffect(()=>{
           </CardComponent>
 
         </Row>
+        <Modal show={show} onHide={handleClose} centered>
+          <Modal.Header
+            closeButton
+            style={{ borderBottom: "none" }}
+          ></Modal.Header>
+          <Modal.Body className="text-center">
+            <div className="mb-4">
+              {/* <img src="" alt="Image" style={{ width: "76px" }} /> */}
+            </div>
+            <h5>Are you want to request this permission?</h5>
+          </Modal.Body>
+          <Modal.Footer
+            style={{ borderTop: "none", justifyContent: "center" }}
+            className="mb-4"
+          >
+            <Button
+              variant="outline-secondary"
+              onClick={handleClose}
+              style={{ width: "112px" }}
+            >
+              Cancel
+            </Button>
+            {permissionLoading ? (
+              <div className="d-flex justify-content-end mt-3">
+                <Spinner className="ms-2" color="primary" />
+              </div>
+            ) : (
+              <Button className="btn button" onClick={handleSubmit}>
+                Yes, I’m Sure
+              </Button>
+            )}
+          </Modal.Footer>
+        </Modal>
       </InnerLayer>
     </React.Fragment>
   );

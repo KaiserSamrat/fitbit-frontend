@@ -110,7 +110,7 @@ const SidebarContent = (props) => {
             <li className="menu-title">{"Menu"} </li>
           {
             userrole === "USER" ?      <li>
-            <Link to="/admin-dashboard" className="">
+            <Link to="/dashboard" className="">
               <i>
                 <img src={icon1} alt="icon" />
               </i>
@@ -160,6 +160,20 @@ const SidebarContent = (props) => {
                       <img src={profileCircle} alt="" />
                     </i>
                     <span>{"User List"}</span>
+                
+                  </Link>
+                </li>
+            
+              </React.Fragment>
+            ) : null}
+                      {userrole === "DOCTOR" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/permitted-user"  className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Permitted User"}</span>
                 
                   </Link>
                 </li>

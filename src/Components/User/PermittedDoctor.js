@@ -54,7 +54,7 @@ const PermittedDoctor = ({ history }) => {
 console.log('permissionData', permissionData);
  
 useEffect(()=>{
-  dispatch(getPermission(authtoken));
+  dispatch(getPermission(authtoken, true));
 }, [])
 
 const handleDelete = (data) => {

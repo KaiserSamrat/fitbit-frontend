@@ -44,11 +44,11 @@ console.log('loginUserResponse', loginUserResponse);
       yield put(UserError());
       console.log("user", loginUserResponse.user.role);
       if (loginUserResponse?.user?.role === "ADMIN") {
-        history.push(`/admin-dashboard`);
+        history.push(`/dashboard`);
       } 
       if (loginUserResponse?.user?.role === "USER") {
         console.log('ei ke');
-        history.push(`/admin-dashboard`);
+        history.push(`/dashboard`);
       } 
       if (loginUserResponse?.user?.role === "DOCTOR") {
         history.push(`/user`);

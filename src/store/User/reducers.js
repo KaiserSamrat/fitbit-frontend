@@ -32,7 +32,13 @@ import {
   GET_PERMISSION_FAIL,
   REMOVE_PERMISSION,
   REMOVE_PERMISSION_SUCCESS,
-  REMOVE_PERMISSION_FAIL
+  REMOVE_PERMISSION_FAIL,
+  POST_USER_DATA,
+  POST_USER_DATA_SUCCESS,
+  POST_USER_DATA_FAIL,
+  UPDATE_PERMISSION,
+  UPDATE_PERMISSION_SUCCESS,
+  UPDATE_PERMISSION_FAIL
 } from "./actionTypes";
 const INIT_STATE = {
   users: [],
@@ -58,7 +64,9 @@ const INIT_STATE = {
   activityDataLoading: true,
   permissionLoading: false,
   permissionDataLoading: false,
-  removePermissionLoading: false
+  removePermissionLoading: false,
+  syncInfoLoading: false,
+  updatePermissionLoading: false,
 };
 
 const UserReducer = (state = INIT_STATE, action) => {
@@ -79,6 +87,39 @@ const UserReducer = (state = INIT_STATE, action) => {
         error: action.payload,
         addingUser: false,
       };
+
+      case UPDATE_PERMISSION:
+        return {
+          ...state,
+          updatePermissionLoading: true,
+        };
+        case UPDATE_PERMISSION_SUCCESS:
+          return {
+            ...state,
+            updatePermissionLoading: false,
+          };
+      case UPDATE_PERMISSION_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+          updatePermissionLoading: false,
+        };
+      case POST_USER_DATA:
+        return {
+          ...state,
+          syncInfoLoading: true,
+        };
+        case POST_USER_DATA_SUCCESS:
+          return {
+            ...state,
+            syncInfoLoading: false,
+          };
+      case POST_USER_DATA_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+          syncInfoLoading: false,
+        };
       case GENERATE_URL:
         return {
           ...state,

@@ -44,6 +44,8 @@ import {
   removeDoctorPermissionSuccess,
   removeDoctorPermissionFail,
   getPermission,
+  updateDoctorPermissionSuccess,
+  updateDoctorPermissionFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -62,6 +64,7 @@ import {
   POST_HEART_DATA,
   GET_PERMISSION,
   REMOVE_PERMISSION,
+  UPDATE_PERMISSION,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -196,18 +199,45 @@ function* onGivePermission({ payload: { data, history, authtoken } }) {
     yield put(giveDoctorPermissionSuccess(response));
    
     if(response?.status==="Failed"){
+      toaster("warning", "Permission already requested!");
+    }
+    else{
+      toaster("success", "Permission Requested Successfully!");
+      
+    }
+    // history.push("/doctor");
+  } catch (error) {
+    if (!error.response) {
+      // history.push("/doctor");
+    } else {
+      let message = error.response.data.message;
+      yield put(giveDoctorPermissionFail(message));
+      toast.error(message);
+    }
+  }
+}
+function* onUpdatePermission({ payload: { data, history, authtoken, id } }) {
+  try {
+    let response;
+    const url = `/permission/${id}`;
+    response = yield call(updateData, url, data, authtoken);
+    
+    console.log(response);
+    yield put(updateDoctorPermissionSuccess(response));
+    yield put(getPermission(authtoken, false));
+    if(response?.status==="Failed"){
       toaster("warning", "Permission already given!");
     }
     else{
       toaster("success", "Permission Given Successfully!");
     }
-    history.push("/doctor");
+    // history.push("/doctor");
   } catch (error) {
     if (!error.response) {
-      history.push("/doctor");
+      // history.push("/doctor");
     } else {
       let message = error.response.data.message;
-      yield put(giveDoctorPermissionFail(message));
+      yield put(updateDoctorPermissionFail(message));
       toast.error(message);
     }
   }
@@ -222,7 +252,7 @@ function* onRemovePermission({ payload: { data, history, authtoken, doctorId } }
     yield put(removeDoctorPermissionSuccess(response));
     let message = "Permission removed Successfully";
     toast.success(message);
-    yield put(getPermission(authtoken));
+    yield put(getPermission(authtoken, true));
   } catch (error) {
     if (!error.response) {
       history.push("/permitted-doctor");
@@ -297,10 +327,10 @@ function* onPostHeartData({ payload: { data, history, authtoken } }) {
   }
 }
 function* fetchPermissionData({
-  payload: { authtoken },
+  payload: { authtoken, type },
 }) {
   try {
-    const url = `/permission`;
+    const url = `/permission?permitted=${type}`;
     const response = yield call(getData, url, authtoken);
 
     yield put(getPermissionSuccess(response));
@@ -323,6 +353,7 @@ function* UserSaga() {
   yield takeEvery(POST_HEART_DATA, onPostHeartData);
   yield takeEvery(GET_PERMISSION, fetchPermissionData);
   yield takeEvery(REMOVE_PERMISSION, onRemovePermission);
+  yield takeEvery(UPDATE_PERMISSION, onUpdatePermission);
 }
 
 export default UserSaga;
