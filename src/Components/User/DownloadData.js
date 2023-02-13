@@ -304,12 +304,12 @@ const DownloadData = () => {
       downloadxls1(newArray);
     }
     if (categoryRange === "heart") {
-      console.log(fitbitData?.data?.["activities-heart"],'klklkl');
-      let body={
-        data: fitbitData?.data?.["activities-heart"]
-      }
-      console.log('body', body);
-      dispatch(postHeartData(body, history, authtoken));
+      // console.log(fitbitData?.data?.["activities-heart"],'klklkl');
+      // let body={
+      //   data: fitbitData?.data?.["activities-heart"]
+      // }
+      // console.log('body', body);
+      // dispatch(postHeartData(body, history, authtoken));
 
       fitbitData?.data?.["activities-heart"].forEach((info, index) => {
         let heartData = {};
