@@ -375,9 +375,9 @@ const DownloadData = () => {
     data: rangeData
   }
   
-  if(categoryRange !== "heart"){
-    dispatch(postUserData(obj, history, authtoken));
-  }
+  // if(categoryRange !== "heart"){
+  //   dispatch(postUserData(obj, history, authtoken));
+  // }
  
     const ws = XLSX.utils.json_to_sheet(rangeData);
     const wb = XLSX.utils.book_new();

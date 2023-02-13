@@ -17,6 +17,7 @@ const initialState = {
   userrole: "",
   fitbit: "",
   loginId: "",
+  name: "",
   message: "",
   error: "",
 };
@@ -38,6 +39,7 @@ const login = (state = initialState, action) => {
         userrole: action.payload.userrole,
         fitbit:action.payload.fitbit,
         loginId: action.payload.loginId,
+        name: action.payload.name,
         loading: false,
       };
       break;
@@ -49,7 +51,7 @@ const login = (state = initialState, action) => {
       };
       break;
     case LOGOUT_USER:
-      state = { ...state, username: "", token: "", email: "", userrole: "", fitbit: "", loginId:"" };
+      state = { ...state, username: "", token: "", email: "", userrole: "", fitbit: "", loginId:"", name:"" };
       break;
     case LOGOUT_USER_SUCCESS:
       state = { ...state };

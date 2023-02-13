@@ -25,10 +25,10 @@ token : jwt token to verify user
 email  : user email
 userrole : take user role to push user into his own dashboard ex : if userrole "admin" will help to push into admindashboard
 */
-export const loginSuccess = (token, email, userrole, fitbit, loginId) => {
+export const loginSuccess = (token, email, userrole, fitbit, loginId, name) => {
   return {
     type: LOGIN_SUCCESS,
-    payload: { token, email, userrole, fitbit, loginId },
+    payload: { token, email, userrole, fitbit, loginId, name },
   };
 };
 /*

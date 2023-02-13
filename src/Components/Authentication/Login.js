@@ -44,7 +44,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <MetaTags>
-        <title>Fitbit Data</title>
+        <title>Fitbit User Data</title>
       </MetaTags>
       <div className="account-pages my-5 pt-sm-5">
         <Container>

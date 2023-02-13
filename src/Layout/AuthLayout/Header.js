@@ -14,9 +14,10 @@ import mainLogo from "../img/logo.svg";
 import { useDispatch, useSelector } from "react-redux";
 const Header = (props) => {
   const [search, setsearch] = useState(false);
-  const { role, authtoken } = useSelector((state) => ({
+  const { role, authtoken, name } = useSelector((state) => ({
     authtoken: state.Login.token,
     role: state.Login.userrole,
+    name: state.Login.name,
   }));
 
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -72,10 +73,10 @@ const Header = (props) => {
               </Link> */}
               <Link to="/" className="logo logo-dark">
                 <span className="logo-sm">
-                 <h5 className="mt-4 fw-bold">Fitbit Data</h5>
+                 <h5 className="mt-4 fw-bold">Health status of {name}</h5>
                 </span>
                 <span className="logo-lg">
-                <h5 className="mt-4 fw-bold">Fitbit Data</h5>
+                <h5 className="mt-4 fw-bold">Health status of {name}</h5>
                 </span>
               </Link>
             </div>

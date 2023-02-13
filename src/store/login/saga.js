@@ -37,6 +37,7 @@ console.log('loginUserResponse', loginUserResponse);
           loginUserResponse?.user?.role,
           loginUserResponse?.user?.fitbit,
           loginUserResponse?.user?._id,
+          loginUserResponse?.user?.name,
          
         )
       );

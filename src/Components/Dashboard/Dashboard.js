@@ -315,45 +315,7 @@ const Dashboard = () => {
     <Container fluid>
       <BreadcrumbDashboard leftTitle="Dashboard" />
       <h5 className="m-3">Download user data for single date:</h5>
-      <div className="card">
-        <div className="card-body">
-          <div className="row">
-            <div className="col-lg-12 date_search_area">
-              <Form className="form-horizontal-form-wrap">
-                <Select
-                  name="Warehouse"
-                  className="mb-1"
-                  classNamePrefix="select2-selection"
-                  placeholder="Select Categories"
-                  cacheOptions
-                  getOptionLabel={(e) => e.name}
-                  getOptionValue={(e) => e.value}
-                  isClearable
-                  options={categories1}
-                  onChange={handleCurrentDateCategory}
-                />
-                <Form.Group className="form-data-filtering custom-bottom-margin">
-                  <Form.Label>Select Date</Form.Label>
-                  <Form.Control
-                    type="date"
-                    value={currentDate}
-                    onChange={handleChangeDate}
-                  />
-                </Form.Group>
-              </Form>{" "}
-            </div>
-            {currentDataLoading === true ? (
-              <div className="text-center mt-3">
-                <h6>Downloading...</h6>
-              </div>
-            ) : (
-              <div className="text-center mt-3">
-                <Button onClick={handleCurrentDateExcel}>Download Excel</Button>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+     
       <div className="card">
         <div className="card-body">
           <div className="row">
