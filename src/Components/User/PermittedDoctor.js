@@ -88,9 +88,10 @@ const handleDelete = (data) => {
             <Row className="mb-2 table-header-padding">
               <div className="d-flex justify-content-end">
                 <Col
-                  className="me-2 responsive-margin custom-bottom-margin"
+                 
                   md={2}
                 >
+                  <Button className="btn btn-warning-outline" onClick={()=>history.push('/doctor')}>Doctor's List</Button>
                   
                 </Col>
          

@@ -128,6 +128,7 @@ const DoctorList = ({ history }) => {
           <CardComponent className="user_table_card">
             <Row className="mb-2 table-header-padding">
               <div className="d-flex justify-content-end">
+             
                 <Col
                   className="me-2 responsive-margin custom-bottom-margin"
                   md={2}
@@ -139,6 +140,8 @@ const DoctorList = ({ history }) => {
                       placeholder="Search User ID"
                     />
                   </div>
+                  
+              
                 </Col>
 
                 <Col
@@ -151,6 +154,12 @@ const DoctorList = ({ history }) => {
                     <option value="50">50</option>
                     <option value="100">100</option>
                   </Input>
+                </Col>
+                <Col
+                  className="me-2 responsive-margin custom-bottom-margin"
+                  md={2}
+                >
+                 <Button className=" btn btn-warning-outline" onClick={()=>history.push('/permitted-doctor')}>Permitted Doctor</Button>
                 </Col>
               </div>
             </Row>

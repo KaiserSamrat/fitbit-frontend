@@ -180,13 +180,13 @@ const PatientData = () => {
           <Col lg={12}>
             <PermittedDistanceData id={id} />
           </Col>
-          <Col lg={12}>
+          {/* <Col lg={12}>
             <PermittedFloorData id={id}/>
-          </Col>
+          </Col> */}
 
-          <Col lg={12}>
+          {/* <Col lg={12}>
             <PermittedElevationData  id={id}/>
-          </Col>
+          </Col> */}
           <Col lg={12}><PermittedHeartData id={id}/></Col>
         </Row>
       </div>

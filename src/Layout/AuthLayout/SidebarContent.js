@@ -124,7 +124,7 @@ const SidebarContent = (props) => {
 
             {/* info */}
          
-      {userrole === "USER" ? (
+      {/* {userrole === "USER" ? (
               <React.Fragment>
                 <li>
                   <Link to="/doctor"  className="">
@@ -137,7 +137,7 @@ const SidebarContent = (props) => {
                 </li>
             
               </React.Fragment>
-            ) : null}
+            ) : null} */}
                  {userrole === "USER" ? (
               <React.Fragment>
                 <li>

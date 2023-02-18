@@ -356,13 +356,13 @@ const Dashboard = () => {
           <Col lg={12}>
             <DistanceData />
           </Col>
-          <Col lg={12}>
+          {/* <Col lg={12}>
             <FloorData />
-          </Col>
+          </Col> */}
 
-          <Col lg={12}>
+          {/* <Col lg={12}>
             <ElevationData />
-          </Col>
+          </Col> */}
           <Col lg={12}><HeartData/></Col>
         </Row>
       </div>
