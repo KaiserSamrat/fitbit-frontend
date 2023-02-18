@@ -21,12 +21,14 @@ const GenerateUrl = ({ edit }) => {
   let dispatch = useDispatch();
   const history = useHistory();
 
-  const { authtoken, generateUrlLoading, url, urlLoading } = useSelector((state) => ({
-    authtoken: state.Login.token,
-    generateUrlLoading: state.UserReducer.generateUrlLoading,
-    url: state.UserReducer.url,
-    urlLoading: state.UserReducer.urlLoading,
-  }));
+  const { authtoken, generateUrlLoading, url, urlLoading } = useSelector(
+    (state) => ({
+      authtoken: state.Login.token,
+      generateUrlLoading: state.UserReducer.generateUrlLoading,
+      url: state.UserReducer.url,
+      urlLoading: state.UserReducer.urlLoading,
+    })
+  );
 
   const onSubmit = (values) => {
     let obj = {};
@@ -43,7 +45,7 @@ const GenerateUrl = ({ edit }) => {
     validationSchema: generateUrlSchema,
     onSubmit,
   });
-console.log('urlLoading', urlLoading);
+  console.log("urlLoading", urlLoading);
   return (
     <React.Fragment>
       <div className="my-5 pt-sm-5">
@@ -53,7 +55,15 @@ console.log('urlLoading', urlLoading);
               <Col md="9" className="mx-auto">
                 {/* add User */}
                 <AddCardComponent className="">
-               <h4 className="text-center mb-5 fw-bold">Generate Url</h4>
+                  <h4 className="text-center mb-3 fw-bold">Generate Url</h4>
+                  <h5 className="text-center">
+                    Please logged in first in this{" "}
+                    <a
+                      href="https://accounts.fitbit.com/login?targetUrl=https%3A%2F%2Fwww.fitbit.com%2Fglobal%2Fau%2Fhome"
+                      target="_blank"
+                    >Website</a>{" "}
+                    than generateUrl
+                  </h5>
                   <Form
                     className="needs-validation col-md-12"
                     onSubmit={generateUrlData.handleSubmit}
@@ -109,8 +119,6 @@ console.log('urlLoading', urlLoading);
                     )}
                   </Form>
                 </AddCardComponent>
-          
-               
               </Col>
             </Row>
           </div>
