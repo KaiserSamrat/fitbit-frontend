@@ -51,27 +51,27 @@ let dataArray = []
 for (let i = 0; i <heartData?.data?.length; i++){
   dataArray.push(heartData?.data[i].dateString)
   if(categoryCurrent==="Out of Range"){
-    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[0].caloriesOut || 0)
-    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[0].max || 0)
-    minData.push(heartData?.data?.[i].value?.heartRateZones?.[0].min || 0)
+    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[0].caloriesOut?.toFixed(2) || 0)
+    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[0].max?.toFixed(2) || 0)
+    minData.push(heartData?.data?.[i].value?.heartRateZones?.[0].min?.toFixed(2) || 0)
     minutesData.push(heartData?.data?.[i].value?.heartRateZones?.[0].minutes || 0)
   }
   if(categoryCurrent==="Fat Burn"){
-    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[1].caloriesOut || 0)
-    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[1].max || 0)
-    minData.push(heartData?.data?.[i].value?.heartRateZones?.[1].min || 0)
+    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[1].caloriesOut?.toFixed(2) || 0)
+    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[1].max?.toFixed(2) || 0)
+    minData.push(heartData?.data?.[i].value?.heartRateZones?.[1].min?.toFixed(2) || 0)
     minutesData.push(heartData?.data?.[i].value?.heartRateZones?.[1].minutes || 0)
   }
   if(categoryCurrent==="Cardio"){
-    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[2].caloriesOut || 0)
-    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[2].max || 0)
-    minData.push(heartData?.data?.[i].value?.heartRateZones?.[2].min || 0)
+    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[2].caloriesOut?.toFixed(2) || 0)
+    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[2].max?.toFixed(2) || 0)
+    minData.push(heartData?.data?.[i].value?.heartRateZones?.[2].min?.toFixed(2) || 0)
     minutesData.push(heartData?.data?.[i].value?.heartRateZones?.[2].minutes || 0)
   }
   if(categoryCurrent==="Peak"){
-    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[3].caloriesOut || 0)
-    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[3].max || 0)
-    minData.push(heartData?.data?.[i].value?.heartRateZones?.[3].min || 0)
+    caloriesOut.push(heartData?.data?.[i].value?.heartRateZones?.[3].caloriesOut?.toFixed(2) || 0)
+    maxData.push(heartData?.data?.[i].value?.heartRateZones?.[3].max?.toFixed(2) || 0)
+    minData.push(heartData?.data?.[i].value?.heartRateZones?.[3].min?.toFixed(2) || 0)
     minutesData.push(heartData?.data?.[i].value?.heartRateZones?.[3].minutes || 0)
     
   }

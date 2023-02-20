@@ -56,7 +56,7 @@ const Dashboard = () => {
     moment(new Date()).format("YYYY-MM-DD")
   );
   const [startDate, setStartDate] = useState(
-    moment(new Date()).format("YYYY-MM-DD")
+    moment(new Date()).subtract(30, 'days').format("YYYY-MM-DD")
   );
   const [endDate, setEndDate] = useState(
     moment(new Date()).format("YYYY-MM-DD")
@@ -130,6 +130,20 @@ const Dashboard = () => {
       });
     }
   };
+  useEffect(()=>{
+    dispatch(
+      storeDashboardData(
+        "startDateRange",
+        moment(new Date()).subtract(30, 'days').format("YYYY-MM-DD")
+      )
+    );
+    dispatch(
+      storeDashboardData(
+        "endDateRange",
+        moment(new Date()).format("YYYY-MM-DD")
+      )
+    );
+  },[])
   const handleCurrentDateExcel = () => {
     setCurrentDataLoading(true);
     fetch(

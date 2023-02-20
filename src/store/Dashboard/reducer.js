@@ -28,7 +28,7 @@ const INIT_STATE = {
   floorData: [],
   distanceData: [],
   caloriesData: [],
-  startDateRange: moment(new Date()).format("YYYY-MM-DD"),
+  startDateRange:  moment(new Date()).subtract(30, 'days').format("YYYY-MM-DD"),
   endDateRange: moment(new Date()).format("YYYY-MM-DD"),
   heartDataLoading: false,
   stepDataLoading: false,

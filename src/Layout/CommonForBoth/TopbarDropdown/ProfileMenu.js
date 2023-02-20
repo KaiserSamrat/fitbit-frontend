@@ -6,8 +6,9 @@ import { logoutUser } from "../../../store/actions";
 
 const ProfileMenu = ({ history }) => {
   // Declare a new state variable, which we'll call "menu"
-  const { userrole } = useSelector((state) => ({
+  const { userrole, name } = useSelector((state) => ({
     ...state.Login,
+    name: state.Login.name,
   }));
   const [menu, setMenu] = useState(false);
   let dispatch = useDispatch();
@@ -32,8 +33,8 @@ const ProfileMenu = ({ history }) => {
             src={user1}
             alt="Header Avatar"
           /> */}
-          <span className="d-xl-inline-block ml-2 mr-1">{userrole === 'VIEWADMIN' ? "MAPLD": userrole}</span>
-          <i className="mdi mdi-chevron-down d-none d-xl-inline-block" />
+        <i className="bx bx-power-off font-size-16 align-middle mr-1 text-danger" />
+              <span onClick={() => handleLogout()}>{"Logout"}</span>
         </DropdownToggle>
         <DropdownMenu right>
           {/* <span className="dropdown-item">
@@ -48,6 +49,7 @@ const ProfileMenu = ({ history }) => {
             </Link>
           </span>
         </DropdownMenu>
+      
       </Dropdown>
     </React.Fragment>
   );
