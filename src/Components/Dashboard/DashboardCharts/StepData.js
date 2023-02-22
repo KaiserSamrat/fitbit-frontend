@@ -28,7 +28,7 @@ for (let i = 0; i <stepData?.data?.length; i++){
   valueArray.push(stepData?.data[i].value*1)
   dataArray.push(stepData?.data[i].dateString)
 }
-console.log('valueArray', valueArray);
+
   const options = {
     series: [
       {

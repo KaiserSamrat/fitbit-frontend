@@ -25,7 +25,7 @@ const PermittedDistanceData = ({id}) => {
 let valueArray = []
 let dataArray = []
 for (let i = 0; i <distanceData?.data?.length; i++){
-  valueArray.push(distanceData?.data[i].value*1)
+  valueArray.push((distanceData?.data[i].value*1)?.toFixed(2))
   dataArray.push(distanceData?.data[i].dateString)
 }
 

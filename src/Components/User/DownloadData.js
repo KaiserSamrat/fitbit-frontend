@@ -663,6 +663,7 @@ const postSyncData = (data)=>{
                   <Form.Control
                     type="date"
                     value={currentDate}
+                    max={moment().format('YYYY-MM-DD')}
                     onChange={handleChangeDate}
                   />
                 </Form.Group>
@@ -703,6 +704,7 @@ const postSyncData = (data)=>{
                   <Form.Control
                     type="date"
                     value={startDate}
+                    max={moment().format('YYYY-MM-DD')}
                     onChange={handleStartDate}
                   />
                 </Form.Group>
@@ -711,6 +713,7 @@ const postSyncData = (data)=>{
                   <Form.Control
                     type="date"
                     value={endDate}
+                    max={moment().format('YYYY-MM-DD')}
                     onChange={handleEndDate}
                   />
                 </Form.Group>
@@ -740,6 +743,7 @@ const postSyncData = (data)=>{
                   <Form.Control
                     type="date"
                     value={syncBeforeDate}
+                    max={moment().format('YYYY-MM-DD')} 
                     onChange={handleSyncStartDate}
                   />
                 </Form.Group>
@@ -748,6 +752,7 @@ const postSyncData = (data)=>{
                   <Form.Control
                     type="date"
                     value={syncAfterDate}
+                    max={moment().format('YYYY-MM-DD')}
                     onChange={handleSyncEndDate}
                   />
                 </Form.Group>

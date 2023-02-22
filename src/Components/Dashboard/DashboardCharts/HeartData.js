@@ -37,7 +37,7 @@ const HeartData = () => {
    
   }));
 
-console.log('heartData', heartData);
+
 
   useEffect(() => {
     dispatch(getDashboardHeartData(authtoken, 'heart', userId, startDateRange, endDateRange));

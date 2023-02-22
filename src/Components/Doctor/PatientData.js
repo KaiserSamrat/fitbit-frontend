@@ -75,7 +75,7 @@ const PatientData = () => {
       "days"
     );
     console.log("compareStartDay", compareStartDay);
-    if (compareStartDay < 0) {
+    if (compareStartDay <= 0) {
       dispatch(
         storeDashboardData(
           "startDateRange",
@@ -150,6 +150,7 @@ const PatientData = () => {
                   <Form.Control
                     type="date"
                     value={startDate}
+                    max={moment().format('YYYY-MM-DD')}
                     onChange={handleStartDate}
                   />
                 </Form.Group>
@@ -158,6 +159,7 @@ const PatientData = () => {
                   <Form.Control
                     type="date"
                     value={endDate}
+                    max={moment().format('YYYY-MM-DD')} 
                     onChange={handleEndDate}
                   />
                 </Form.Group>

@@ -76,8 +76,9 @@ const Dashboard = () => {
       moment(endDate),
       "days"
     );
+ 
     console.log("compareStartDay", compareStartDay);
-    if (compareStartDay < 0) {
+    if (compareStartDay <= 0) {
       dispatch(
         storeDashboardData(
           "startDateRange",
@@ -100,7 +101,9 @@ const Dashboard = () => {
     }
   };
   const handleEndDate = (e) => {
+    console.log('e.target.value', e.target.value);
     setEndDate(e.target.value);
+
     const compareEndDay = moment(e.target.value).diff(
       moment(startDate),
       "days"
@@ -340,6 +343,7 @@ const Dashboard = () => {
                   <Form.Control
                     type="date"
                     value={startDate}
+                    max={moment().format('YYYY-MM-DD')} 
                     onChange={handleStartDate}
                   />
                 </Form.Group>
@@ -348,6 +352,7 @@ const Dashboard = () => {
                   <Form.Control
                     type="date"
                     value={endDate}
+                    max={moment().format('YYYY-MM-DD')} 
                     onChange={handleEndDate}
                   />
                 </Form.Group>
