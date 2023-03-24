@@ -27,7 +27,7 @@ const renderTooltipView = (props) => (
   </Tooltip>
 );
 
-const DoctorList = ({ history }) => {
+const PermittedDoc = ({ history }) => {
   const [userList, setUser] = useState("Central Warehouse");
   var useremployee = "";
 
@@ -85,9 +85,9 @@ const DoctorList = ({ history }) => {
   //   dispatch(getUsers(authtoken, "DOCTOR", value, currentPage, pageRange));
   // }, [currentPage, pageRange, roleList, value]);
   useEffect(()=>{
-    if(role==="USER"){
+    
       dispatch(getPermission(authtoken, false))
-    }
+   
     
   },[])
 
@@ -303,9 +303,9 @@ const DoctorList = ({ history }) => {
   );
 };
 
-DoctorList.propTypes = {
+PermittedDoc.propTypes = {
   history: PropTypes.object,
   location: PropTypes.object,
 };
 
-export default withRouter(DoctorList);
+export default withRouter(PermittedDoc);

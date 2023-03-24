@@ -32,9 +32,9 @@ const GenerateUrl = ({ edit }) => {
 
   const onSubmit = (values) => {
     let obj = {};
-    obj.clientId = values.clientId;
-    obj.clientSecret = values.clientSecret;
-    obj.url = values.url;
+    obj.clientId = values.clientId?.trim();
+    obj.clientSecret = values.clientSecret?.trim();
+    obj.url = values.url?.trim();
 
     dispatch(generateUrl(obj, history, authtoken));
   };

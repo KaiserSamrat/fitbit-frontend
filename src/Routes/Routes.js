@@ -1,4 +1,8 @@
 import { Redirect } from 'react-router-dom';
+import CreateUser from '../Components/Admin/CreateUser';
+import PermittedDoc from '../Components/Admin/PermittedDoc';
+import SyncData from '../Components/Admin/SyncData';
+import UserList from '../Components/Admin/UserList';
 import Login from '../Components/Authentication/Login';
 
 import Dashboard from '../Components/Dashboard/Dashboard';
@@ -93,6 +97,30 @@ const protectedRoute = [
     component: PermittedUser,
     exact: true,
     roles: ['DOCTOR','ADMIN'],
+  },
+  {
+    path: '/user-list',
+    component: UserList,
+    exact: true,
+    roles: [ 'ADMIN'],
+  },
+  {
+    path: '/sync-data',
+    component: SyncData,
+    exact: true,
+    roles: ['USER', 'DOCTOR', 'ADMIN'],
+  },
+  {
+    path: '/create-user',
+    component: CreateUser,
+    exact: true,
+    roles: [ 'ADMIN'],
+  },
+  {
+    path: '/permitted-doc',
+    component: PermittedDoc,
+    exact: true,
+    roles: [ 'ADMIN'],
   },
 ];
 

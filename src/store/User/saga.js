@@ -46,6 +46,12 @@ import {
   getPermission,
   updateDoctorPermissionSuccess,
   updateDoctorPermissionFail,
+  getAdminExtendTokenSuccess,
+  getAdminExtendTokenFail,
+  SyncByAdminDataSuccess,
+  SyncByAdminDataFail,
+  syncHeartDataByAdminSuccess,
+  syncHeartDataByAdminFail,
 } from "./actions";
 import {
   ADD_USER,
@@ -65,6 +71,9 @@ import {
   GET_PERMISSION,
   REMOVE_PERMISSION,
   UPDATE_PERMISSION,
+  GET_ADMIN_EXTEND_TOKEN,
+  SYNC_BY_ADMIN_DATA,
+  SYNC_HEART_DATA_BY_ADMIN,
 } from "./actionTypes";
 
 function* onAddNewUser({ payload: { data, history, authtoken } }) {
@@ -338,6 +347,57 @@ function* fetchPermissionData({
     yield put(getPermissionFail(error));
   }
 }
+function* fetchAdminExtendToken({
+  payload: { authtoken },
+}) {
+  try {
+    const url = `/users/extendfor-all`;
+    const response = yield call(getData, url, authtoken);
+
+    yield put(getAdminExtendTokenSuccess(response));
+  } catch (error) {
+    yield put(getAdminExtendTokenFail(error));
+  }
+}
+function* onSyncByAdminData({ payload: { data, history, authtoken, userID } }) {
+  try {
+    let response;
+    const url = `users/data-entry?userid=${userID}`;
+    response = yield call(postData, url, data, authtoken);
+    console.log(response);
+    yield put(SyncByAdminDataSuccess(response));
+   
+   
+  } catch (error) {
+    if (!error.response) {
+    
+    } else {
+      let message = error.response.data.message;
+      yield put(SyncByAdminDataFail(message));
+      toast.error(message);
+    }
+  }
+}
+function* onPostHeartDataByAdmin({ payload: { data, history, authtoken, userID } }) {
+  try {
+    let response;
+    console.log();
+    const url = `users/data-entry-heart?userid=${userID}`;
+    response = yield call(postData, url, data, authtoken);
+    console.log(response);
+    yield put(syncHeartDataByAdminSuccess(response));
+   
+   
+  } catch (error) {
+    if (!error.response) {
+    
+    } else {
+      let message = error.response.data.message;
+      yield put(syncHeartDataByAdminFail(message));
+      toast.error(message);
+    }
+  }
+}
 function* UserSaga() {
   yield takeEvery(ADD_USER, onAddNewUser);
   yield takeEvery(GET_ALL_USER, fetchUser);
@@ -354,6 +414,9 @@ function* UserSaga() {
   yield takeEvery(GET_PERMISSION, fetchPermissionData);
   yield takeEvery(REMOVE_PERMISSION, onRemovePermission);
   yield takeEvery(UPDATE_PERMISSION, onUpdatePermission);
+  yield takeEvery(GET_ADMIN_EXTEND_TOKEN, fetchAdminExtendToken);
+  yield takeEvery(SYNC_BY_ADMIN_DATA, onSyncByAdminData);
+  yield takeEvery(SYNC_HEART_DATA_BY_ADMIN, onPostHeartDataByAdmin);
 }
 
 export default UserSaga;

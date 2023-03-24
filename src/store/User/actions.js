@@ -50,7 +50,16 @@ import {
   REMOVE_PERMISSION_FAIL,
   UPDATE_PERMISSION,
   UPDATE_PERMISSION_SUCCESS,
-  UPDATE_PERMISSION_FAIL
+  UPDATE_PERMISSION_FAIL,
+  GET_ADMIN_EXTEND_TOKEN,
+  GET_ADMIN_EXTEND_TOKEN_SUCCESS,
+  GET_ADMIN_EXTEND_TOKEN_FAIL,
+  SYNC_BY_ADMIN_DATA,
+  SYNC_BY_ADMIN_DATA_SUCCESS,
+  SYNC_BY_ADMIN_DATA_FAIL,
+  SYNC_HEART_DATA_BY_ADMIN,
+  SYNC_HEART_DATA_BY_ADMIN_SUCCESS,
+  SYNC_HEART_DATA_BY_ADMIN_FAIL
 } from "./actionTypes";
 
 export const addUser = (data, history, authtoken) => ({
@@ -251,6 +260,20 @@ export const getExtendTokenFail = (error) => ({
   payload: error,
 });
 
+export const getAdminExtendToken = (authtoken) => ({
+  type: GET_ADMIN_EXTEND_TOKEN,
+  payload: { authtoken },
+});
+
+export const getAdminExtendTokenSuccess = (data, authtoken) => ({
+  type: GET_ADMIN_EXTEND_TOKEN_SUCCESS,
+  payload: { data, authtoken },
+});
+
+export const getAdminExtendTokenFail = (error) => ({
+  type: GET_ADMIN_EXTEND_TOKEN_FAIL,
+  payload: error,
+});
 
 export const postUserData = (data, history, authtoken) => ({
   type: POST_USER_DATA,
@@ -283,8 +306,37 @@ export const postHeartDataFail = (error) => ({
 });
 
 
+export const SyncByAdminData = (data, history, authtoken, userID) => ({
+  type: SYNC_BY_ADMIN_DATA,
+  payload: { data, history, authtoken, userID },
+});
+
+export const SyncByAdminDataSuccess = (data) => ({
+  type: SYNC_BY_ADMIN_DATA_SUCCESS,
+  payload: data,
+});
+
+export const SyncByAdminDataFail = (error) => ({
+  type: SYNC_BY_ADMIN_DATA_FAIL,
+  payload: error,
+});
 
 
+
+export const syncHeartDataByAdmin = (data, history, authtoken, userID) => ({
+  type: SYNC_HEART_DATA_BY_ADMIN,
+  payload: { data, history, authtoken, userID },
+});
+
+export const syncHeartDataByAdminSuccess = (data) => ({
+  type: SYNC_HEART_DATA_BY_ADMIN_SUCCESS,
+  payload: data,
+});
+
+export const syncHeartDataByAdminFail = (error) => ({
+  type: SYNC_HEART_DATA_BY_ADMIN_FAIL,
+  payload: error,
+});
 
 
 

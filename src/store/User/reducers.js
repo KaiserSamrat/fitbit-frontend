@@ -38,7 +38,13 @@ import {
   POST_USER_DATA_FAIL,
   UPDATE_PERMISSION,
   UPDATE_PERMISSION_SUCCESS,
-  UPDATE_PERMISSION_FAIL
+  UPDATE_PERMISSION_FAIL,
+  SYNC_BY_ADMIN_DATA,
+  SYNC_BY_ADMIN_DATA_SUCCESS,
+  SYNC_BY_ADMIN_DATA_FAIL,
+  SYNC_HEART_DATA_BY_ADMIN,
+  SYNC_HEART_DATA_BY_ADMIN_SUCCESS,
+  SYNC_HEART_DATA_BY_ADMIN_FAIL
 } from "./actionTypes";
 const INIT_STATE = {
   users: [],
@@ -261,7 +267,38 @@ const UserReducer = (state = INIT_STATE, action) => {
         ...state,
         permissionDataLoading: false,
       };
-
+      case SYNC_BY_ADMIN_DATA:
+        return {
+          ...state,
+          syncInfoLoading: true,
+        };
+        case SYNC_BY_ADMIN_DATA_SUCCESS:
+          return {
+            ...state,
+            syncInfoLoading: false,
+          };
+      case SYNC_BY_ADMIN_DATA_FAIL:
+        return {
+          ...state,
+          error: action.payload,
+          syncInfoLoading: false,
+        };
+        case SYNC_HEART_DATA_BY_ADMIN:
+          return {
+            ...state,
+            syncInfoLoading: true,
+          };
+          case SYNC_HEART_DATA_BY_ADMIN_SUCCESS:
+            return {
+              ...state,
+              syncInfoLoading: false,
+            };
+        case SYNC_HEART_DATA_BY_ADMIN_FAIL:
+          return {
+            ...state,
+            error: action.payload,
+            syncInfoLoading: false,
+          };
     case STORE_USER_DATA:
       return {
         ...state,

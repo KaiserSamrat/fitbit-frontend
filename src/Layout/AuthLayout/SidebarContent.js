@@ -108,23 +108,20 @@ const SidebarContent = (props) => {
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
             <li className="menu-title">{"Menu"} </li>
-          {
-            userrole === "USER" ?      <li>
-            <Link to="/dashboard" className="">
-              <i>
-                <img src={icon1} alt="icon" />
-              </i>
-              <span>{"Dashboard"}</span>
-            </Link>
-          </li> :null
-          }
-        
-          
-         
+            {userrole === "USER" ? (
+              <li>
+                <Link to="/dashboard" className="">
+                  <i>
+                    <img src={icon1} alt="icon" />
+                  </i>
+                  <span>{"Dashboard"}</span>
+                </Link>
+              </li>
+            ) : null}
 
             {/* info */}
-         
-      {/* {userrole === "USER" ? (
+
+            {/* {userrole === "USER" ? (
               <React.Fragment>
                 <li>
                   <Link to="/doctor"  className="">
@@ -138,81 +135,104 @@ const SidebarContent = (props) => {
             
               </React.Fragment>
             ) : null} */}
-                 {userrole === "USER" ? (
+            {userrole === "USER" ? (
               <React.Fragment>
                 <li>
-                  <Link to="/permitted-doctor"  className="">
+                  <Link to="/permitted-doctor" className="">
                     <i>
                       <img src={profileCircle} alt="" />
                     </i>
                     <span>{"Permitted Doctors"}</span>
-               
                   </Link>
                 </li>
-            
               </React.Fragment>
             ) : null}
-                 {userrole === "DOCTOR" ? (
+            {userrole === "DOCTOR" ? (
               <React.Fragment>
                 <li>
-                  <Link to="/user"  className="">
+                  <Link to="/user" className="">
                     <i>
                       <img src={profileCircle} alt="" />
                     </i>
                     <span>{"User List"}</span>
-                
                   </Link>
                 </li>
-            
               </React.Fragment>
             ) : null}
-                      {userrole === "DOCTOR" ? (
+            {userrole === "DOCTOR" ? (
               <React.Fragment>
                 <li>
-                  <Link to="/permitted-user"  className="">
+                  <Link to="/permitted-user" className="">
                     <i>
                       <img src={profileCircle} alt="" />
                     </i>
                     <span>{"Permitted User"}</span>
-                
                   </Link>
                 </li>
-            
               </React.Fragment>
             ) : null}
             {/* hub */}
-            {
-              userrole === "USER" ?   <React.Fragment>
-              <li>
-                <Link to="/generate-url"  className="">
-                  <i>
-                    <img src={profileCircle} alt="" />
-                  </i>
-                  <span>{"Generate url"}</span>
-              
-                </Link>
-              </li>
-          
-            </React.Fragment> : null
-            }
-        {
-          userrole === "USER" ? 
-          <React.Fragment>
-          <li>
-            <Link to="/data-download"  className="">
-              <i>
-                <img src={profileCircle} alt="" />
-              </i>
-              <span>{"Download Data"}</span>
-          
-            </Link>
-          </li>
-      
-        </React.Fragment>: null
-        }
-          
-            
-              {/* <React.Fragment>
+            {userrole === "USER" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/generate-url" className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Generate url"}</span>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : null}
+            {userrole === "USER" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/data-download" className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Download Data"}</span>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : null}
+            {userrole === "ADMIN" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/user-list" className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"User"}</span>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : null}
+            {userrole === "ADMIN" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/sync-data" className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Sync data"}</span>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : null}
+            {userrole === "ADMIN" ? (
+              <React.Fragment>
+                <li>
+                  <Link to="/permitted-doc" className="">
+                    <i>
+                      <img src={profileCircle} alt="" />
+                    </i>
+                    <span>{"Permitted Doctor"}</span>
+                  </Link>
+                </li>
+              </React.Fragment>
+            ) : null}
+            {/* <React.Fragment>
                 <li>
                   <Link to="/fitbit-data"  className="">
                     <i>

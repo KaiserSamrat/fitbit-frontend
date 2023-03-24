@@ -45,7 +45,8 @@ console.log('loginUserResponse', loginUserResponse);
       yield put(UserError());
       console.log("user", loginUserResponse.user.role);
       if (loginUserResponse?.user?.role === "ADMIN") {
-        history.push(`/dashboard`);
+        console.log('hello987');
+        history.push(`/user-list`);
       } 
       if (loginUserResponse?.user?.role === "USER") {
         console.log('ei ke');
@@ -60,7 +61,7 @@ console.log('loginUserResponse', loginUserResponse);
         if (intended) {
           history.push(intended.from);
         } else {
-          history.push("/");
+          // history.push("/");
         }
       }
     } else {

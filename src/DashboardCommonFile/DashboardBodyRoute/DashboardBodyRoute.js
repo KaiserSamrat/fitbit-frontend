@@ -94,9 +94,7 @@ const DashboardBodyRoute = () => {
         <AdminRoute path="/parliamentary-seat">
           <ParliamentarySeat />
         </AdminRoute>
-        <AdminRoute exact path="/user-list">
-          <UserList />
-        </AdminRoute>{" "}
+  
         <Route exact path="/assign-institute">
           <AssignInstitute />
         </Route>
