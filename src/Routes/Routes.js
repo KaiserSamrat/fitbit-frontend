@@ -7,6 +7,7 @@ import Login from '../Components/Authentication/Login';
 
 import Dashboard from '../Components/Dashboard/Dashboard';
 import PatientData from '../Components/Doctor/PatientData';
+import SyncSingleUser from '../Components/Doctor/SyncSingleUser';
 import AddUser from '../Components/User/AddUser';
 import DoctorList from '../Components/User/DoctorList';
 import DownloadData from '../Components/User/DownloadData';
@@ -121,6 +122,12 @@ const protectedRoute = [
     component: PermittedDoc,
     exact: true,
     roles: [ 'ADMIN'],
+  },
+  {
+    path: '/sync-user/:id',
+    component: SyncSingleUser,
+    exact: true,
+    roles: [ 'DOCTOR'],
   },
 ];
 

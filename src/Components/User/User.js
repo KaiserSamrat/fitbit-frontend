@@ -7,7 +7,7 @@ import Select from "react-select";
 import { Badge, Col, Input, Row, Spinner } from "reactstrap";
 import * as XLSX from "xlsx";
 import { get } from "../../helpers/api_helper";
-import { getPermission, getUsers, giveDoctorPermission } from "../../store/User/actions";
+import { getAdminExtendToken, getPermission, getUsers, giveDoctorPermission } from "../../store/User/actions";
 import SearchInput from "../Atoms/SearchInput";
 import CardComponent from "../Layout/CardComponent";
 import CustomTable from "../Layout/CustomTable";
@@ -54,15 +54,13 @@ const User = ({ history }) => {
       permissionLoading: state.UserReducer.permissionLoading,
     }));
 console.log('users', users);
-  let totalPageNumber = Math.ceil(users?.users?.length / pageRange);
+  
+useEffect(() => {
+    
+  dispatch(getAdminExtendToken(authtoken));
 
 
-  const handleRange = (e) => {
-    setPageRange(e.target.value);
-  };
-useEffect(()=>{
-  dispatch(getPermission(authtoken));
-}, [])
+}, []);
 
 const handleShow = (data) => {
   setShow(true);
@@ -75,7 +73,7 @@ useEffect(() => {
   dispatch(getUsers(authtoken, "USER", value, currentPage, pageRange));
 }, [currentPage, pageRange, value]);
 const handleSubmit = () => {
-  console.log("hello");
+  
   let body = {
     patient: patientId,
     doctor: LoginId,
